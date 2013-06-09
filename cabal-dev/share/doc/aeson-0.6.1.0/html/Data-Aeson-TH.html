@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Data.Aeson.TH</title><link href="ocean.css" rel="stylesheet" type="text/css" title="Ocean" /><script src="haddock-util.js" type="text/javascript"></script><script type="text/javascript">//<![CDATA[
+window.onload = function () {pageLoad();setSynopsis("mini_Data-Aeson-TH.html");};
+//]]>
+</script></head><body><div id="package-header"><ul class="links" id="page-menu"><li><a href="index.html">Contents</a></li><li><a href="doc-index.html">Index</a></li></ul><p class="caption">aeson-0.6.1.0: Fast JSON parsing and encoding</p></div><div id="content"><div id="module-header"><table class="info"><tr><th>Portability</th><td>portable</td></tr><tr><th>Stability</th><td>experimental</td></tr><tr><th>Safe Haskell</th><td>None</td></tr></table><p class="caption">Data.Aeson.TH</p></div><div id="description"><p class="caption">Description</p><div class="doc"><p>Functions to mechanically derive <code><a href="Data-Aeson-Types.html#t:ToJSON">ToJSON</a></code> and <code><a href="Data-Aeson-Types.html#t:FromJSON">FromJSON</a></code> instances. Note that
+you need to enable the <code>TemplateHaskell</code> language extension in order to use this
+module.
+</p><p>An example shows how instances are generated for arbitrary data types. First we
+define a data type:
+</p><pre>
+data D a = Nullary
+         | Unary Int
+         | Product String Char a
+         | Record { testOne   :: Double
+                  , testTwo   :: Bool
+                  , testThree :: D a
+                  } deriving Eq
+</pre><p>Next we derive the necessary instances. Note that we make use of the feature to
+change record field names. In this case we drop the first 4 characters of every
+field name.
+</p><pre>
+$(<code><a href="Data-Aeson-TH.html#v:deriveJSON">deriveJSON</a></code> (<code>drop</code> 4) ''D)
+</pre><p>This will result in the following (simplified) code to be spliced in your program:
+</p><pre>
+import Control.Applicative
+import Control.Monad
+import Data.Aeson
+import Data.Aeson.TH
+import qualified Data.HashMap.Strict as H
+import qualified Data.Text as T
+import qualified Data.Vector as V
+
+instance <code><a href="Data-Aeson-Types.html#t:ToJSON">ToJSON</a></code> a =&gt; <code><a href="Data-Aeson-Types.html#t:ToJSON">ToJSON</a></code> (D a) where
+    <code><a href="Data-Aeson-Types.html#v:toJSON">toJSON</a></code> =
+      \value -&gt;
+        case value of
+          Nullary -&gt;
+              <code><a href="Data-Aeson-Types.html#v:object">object</a></code> [T.pack &quot;Nullary&quot; .= <code><a href="Data-Aeson-Types.html#v:toJSON">toJSON</a></code> ([] :: [()])]
+          Unary arg1 -&gt;
+              <code><a href="Data-Aeson-Types.html#v:object">object</a></code> [T.pack &quot;Unary&quot; .= <code><a href="Data-Aeson-Types.html#v:toJSON">toJSON</a></code> arg1]
+          Product arg1 arg2 arg3 -&gt;
+              <code><a href="Data-Aeson-Types.html#v:object">object</a></code> [ T.pack &quot;Product&quot;
+                       .= (<code><a href="Data-Aeson-Types.html#v:Array">Array</a></code> $ <code><a href="/Library/Haskell/ghc-7.6.3/lib/vector-0.10.0.1/doc/html/Data-Vector.html#v:create">create</a></code> $ do
+                             mv &lt;- <code><a href="/Library/Haskell/ghc-7.6.3/lib/vector-0.10.0.1/doc/html/Data-Vector-Mutable.html#v:unsafeNew">unsafeNew</a></code> 3
+                             <code><a href="/Library/Haskell/ghc-7.6.3/lib/vector-0.10.0.1/doc/html/Data-Vector-Mutable.html#v:unsafeWrite">unsafeWrite</a></code> mv 0 (<code><a href="Data-Aeson-Types.html#v:toJSON">toJSON</a></code> arg1)
+                             <code><a href="/Library/Haskell/ghc-7.6.3/lib/vector-0.10.0.1/doc/html/Data-Vector-Mutable.html#v:unsafeWrite">unsafeWrite</a></code> mv 1 (<code><a href="Data-Aeson-Types.html#v:toJSON">toJSON</a></code> arg2)
+                             <code><a href="/Library/Haskell/ghc-7.6.3/lib/vector-0.10.0.1/doc/html/Data-Vector-Mutable.html#v:unsafeWrite">unsafeWrite</a></code> mv 2 (<code><a href="Data-Aeson-Types.html#v:toJSON">toJSON</a></code> arg3)
+                             return mv)
+                     ]
+          Record arg1 arg2 arg3 -&gt;
+              <code><a href="Data-Aeson-Types.html#v:object">object</a></code> [ T.pack &quot;Record&quot;
+                       .= <code><a href="Data-Aeson-Types.html#v:object">object</a></code> [ T.pack &quot;One&quot;   <code><a href="Data-Aeson-Types.html#v:.-61-">.=</a></code> arg1
+                                 , T.pack &quot;Two&quot;   <code><a href="Data-Aeson-Types.html#v:.-61-">.=</a></code> arg2
+                                 , T.pack &quot;Three&quot; <code><a href="Data-Aeson-Types.html#v:.-61-">.=</a></code> arg3
+                                 ]
+                     ]
+</pre><pre>
+instance <code><a href="Data-Aeson-Types.html#t:FromJSON">FromJSON</a></code> a =&gt; <code><a href="Data-Aeson-Types.html#t:FromJSON">FromJSON</a></code> (D a) where
+    <code><a href="Data-Aeson-Types.html#v:parseJSON">parseJSON</a></code> =
+      \value -&gt;
+        case value of
+          <code><a href="Data-Aeson-Types.html#t:Object">Object</a></code> obj -&gt;
+            case H.toList obj of
+              [(conKey, conVal)] -&gt;
+                case conKey of
+                  _ | conKey == T.pack &quot;Nullary&quot; -&gt;
+                        case conVal of
+                          <code><a href="Data-Aeson-Types.html#v:Array">Array</a></code> arr -&gt;
+                            if V.null arr
+                            then pure Nullary
+                            else fail &quot;&lt;error message&gt;&quot;
+                          _ -&gt; fail &quot;&lt;error message&gt;&quot;
+                    | conKey == T.pack &quot;Unary&quot; -&gt;
+                        case conVal of
+                          arg -&gt; Unary &lt;$&gt; parseJSON arg
+                    | conKey == T.pack &quot;Product&quot; -&gt;
+                        case conVal of
+                          <code><a href="Data-Aeson-Types.html#v:Array">Array</a></code> arr -&gt;
+                            if V.length arr == 3
+                            then Product &lt;$&gt; <code><a href="Data-Aeson-Types.html#v:parseJSON">parseJSON</a></code> (arr <code><a href="/Library/Haskell/ghc-7.6.3/lib/vector-0.10.0.1/doc/html/Data-Vector.html#v:unsafeIndex">unsafeIndex</a></code> 0)
+                                         &lt;*&gt; <code><a href="Data-Aeson-Types.html#v:parseJSON">parseJSON</a></code> (arr <code><a href="/Library/Haskell/ghc-7.6.3/lib/vector-0.10.0.1/doc/html/Data-Vector.html#v:unsafeIndex">unsafeIndex</a></code> 1)
+                                         &lt;*&gt; <code><a href="Data-Aeson-Types.html#v:parseJSON">parseJSON</a></code> (arr <code><a href="/Library/Haskell/ghc-7.6.3/lib/vector-0.10.0.1/doc/html/Data-Vector.html#v:unsafeIndex">unsafeIndex</a></code> 2)
+                            else fail &quot;&lt;error message&gt;&quot;
+                          _ -&gt; fail &quot;&lt;error message&gt;&quot;
+                    | conKey == T.pack &quot;Record&quot; -&gt;
+                        case conVal of
+                          <code><a href="Data-Aeson-Types.html#t:Object">Object</a></code> recObj -&gt;
+                            if H.size recObj == 3
+                            then Record &lt;$&gt; recObj <code>.:</code> T.pack &quot;One&quot;
+                                        &lt;*&gt; recObj <code>.:</code> T.pack &quot;Two&quot;
+                                        &lt;*&gt; recObj <code>.:</code> T.pack &quot;Three&quot;
+                            else fail &quot;&lt;error message&gt;&quot;
+                          _ -&gt; fail &quot;&lt;error message&gt;&quot;
+                    | otherwise -&gt; fail &quot;&lt;error message&gt;&quot;
+              _ -&gt; fail &quot;&lt;error message&gt;&quot;
+          _ -&gt; fail &quot;&lt;error message&gt;&quot;
+</pre><p>Note that every &quot;&lt;error message&gt;&quot; is in fact a descriptive message which
+provides as much information as is reasonable about the failed parse.
+</p><p>Now we can use the newly created instances.
+</p><pre>
+d :: D <code>Int</code>
+d = Record { testOne = 3.14159
+           , testTwo = <code>True</code>
+           , testThree = Product &quot;test&quot; 'A' 123
+           }
+</pre><pre class="screen"><code class="prompt">&gt;&gt;&gt; </code><strong class="userinput"><code>fromJSON (toJSON d) == Success d
+</code></strong>&gt; True
+</pre><p>Please note that you can derive instances for tuples using the following syntax:
+</p><pre>
+-- FromJSON and ToJSON instances for 4-tuples.
+$(<code><a href="Data-Aeson-TH.html#v:deriveJSON">deriveJSON</a></code> id ''(,,,))
+</pre></div></div><div id="synopsis"><p id="control.syn" class="caption expander" onclick="toggleSection('syn')">Synopsis</p><ul id="section.syn" class="hide" onclick="toggleSection('syn')"><li class="src short"><a href="#v:deriveJSON">deriveJSON</a> :: (<a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/base-4.6.0.1/Data-String.html#t:String">String</a> -&gt; <a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/base-4.6.0.1/Data-String.html#t:String">String</a>) -&gt; <a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/template-haskell-2.8.0.0/Language-Haskell-TH-Syntax.html#t:Name">Name</a> -&gt; <a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/template-haskell-2.8.0.0/Language-Haskell-TH-Syntax.html#t:Q">Q</a> [<a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/template-haskell-2.8.0.0/Language-Haskell-TH-Syntax.html#t:Dec">Dec</a>]</li><li class="src short"><a href="#v:deriveToJSON">deriveToJSON</a> :: (<a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/base-4.6.0.1/Data-String.html#t:String">String</a> -&gt; <a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/base-4.6.0.1/Data-String.html#t:String">String</a>) -&gt; <a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/template-haskell-2.8.0.0/Language-Haskell-TH-Syntax.html#t:Name">Name</a> -&gt; <a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/template-haskell-2.8.0.0/Language-Haskell-TH-Syntax.html#t:Q">Q</a> [<a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/template-haskell-2.8.0.0/Language-Haskell-TH-Syntax.html#t:Dec">Dec</a>]</li><li class="src short"><a href="#v:deriveFromJSON">deriveFromJSON</a> :: (<a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/base-4.6.0.1/Data-String.html#t:String">String</a> -&gt; <a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/base-4.6.0.1/Data-String.html#t:String">String</a>) -&gt; <a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/template-haskell-2.8.0.0/Language-Haskell-TH-Syntax.html#t:Name">Name</a> -&gt; <a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/template-haskell-2.8.0.0/Language-Haskell-TH-Syntax.html#t:Q">Q</a> [<a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/template-haskell-2.8.0.0/Language-Haskell-TH-Syntax.html#t:Dec">Dec</a>]</li><li class="src short"><a href="#v:mkToJSON">mkToJSON</a> :: (<a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/base-4.6.0.1/Data-String.html#t:String">String</a> -&gt; <a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/base-4.6.0.1/Data-String.html#t:String">String</a>) -&gt; <a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/template-haskell-2.8.0.0/Language-Haskell-TH-Syntax.html#t:Name">Name</a> -&gt; <a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/template-haskell-2.8.0.0/Language-Haskell-TH-Syntax.html#t:Q">Q</a> <a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/template-haskell-2.8.0.0/Language-Haskell-TH-Syntax.html#t:Exp">Exp</a></li><li class="src short"><a href="#v:mkParseJSON">mkParseJSON</a> :: (<a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/base-4.6.0.1/Data-String.html#t:String">String</a> -&gt; <a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/base-4.6.0.1/Data-String.html#t:String">String</a>) -&gt; <a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/template-haskell-2.8.0.0/Language-Haskell-TH-Syntax.html#t:Name">Name</a> -&gt; <a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/template-haskell-2.8.0.0/Language-Haskell-TH-Syntax.html#t:Q">Q</a> <a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/template-haskell-2.8.0.0/Language-Haskell-TH-Syntax.html#t:Exp">Exp</a></li></ul></div><div id="interface"><h1>Documentation</h1><div class="top"><p class="src"><a name="v:deriveJSON" class="def">deriveJSON</a></p><div class="subs arguments"><p class="caption">Arguments</p><table><tr><td class="src">:: (<a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/base-4.6.0.1/Data-String.html#t:String">String</a> -&gt; <a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/base-4.6.0.1/Data-String.html#t:String">String</a>)</td><td class="doc"><p>Function to change field names.
+</p></td></tr><tr><td class="src">-&gt; <a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/template-haskell-2.8.0.0/Language-Haskell-TH-Syntax.html#t:Name">Name</a></td><td class="doc"><p>Name of the type for which to generate <code><a href="Data-Aeson-Types.html#t:ToJSON">ToJSON</a></code> and <code><a href="Data-Aeson-Types.html#t:FromJSON">FromJSON</a></code>
+ instances.
+</p></td></tr><tr><td class="src">-&gt; <a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/template-haskell-2.8.0.0/Language-Haskell-TH-Syntax.html#t:Q">Q</a> [<a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/template-haskell-2.8.0.0/Language-Haskell-TH-Syntax.html#t:Dec">Dec</a>]</td><td class="doc empty">&nbsp;</td></tr></table></div><div class="doc"><p>Generates both <code><a href="Data-Aeson-Types.html#t:ToJSON">ToJSON</a></code> and <code><a href="Data-Aeson-Types.html#t:FromJSON">FromJSON</a></code> instance declarations for the given
+ data type.
+</p><p>This is a convienience function which is equivalent to calling both
+ <code><a href="Data-Aeson-TH.html#v:deriveToJSON">deriveToJSON</a></code> and <code><a href="Data-Aeson-TH.html#v:deriveFromJSON">deriveFromJSON</a></code>.
+</p></div></div><div class="top"><p class="src"><a name="v:deriveToJSON" class="def">deriveToJSON</a></p><div class="subs arguments"><p class="caption">Arguments</p><table><tr><td class="src">:: (<a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/base-4.6.0.1/Data-String.html#t:String">String</a> -&gt; <a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/base-4.6.0.1/Data-String.html#t:String">String</a>)</td><td class="doc"><p>Function to change field names.
+</p></td></tr><tr><td class="src">-&gt; <a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/template-haskell-2.8.0.0/Language-Haskell-TH-Syntax.html#t:Name">Name</a></td><td class="doc"><p>Name of the type for which to generate a <code><a href="Data-Aeson-Types.html#t:ToJSON">ToJSON</a></code> instance
+ declaration.
+</p></td></tr><tr><td class="src">-&gt; <a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/template-haskell-2.8.0.0/Language-Haskell-TH-Syntax.html#t:Q">Q</a> [<a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/template-haskell-2.8.0.0/Language-Haskell-TH-Syntax.html#t:Dec">Dec</a>]</td><td class="doc empty">&nbsp;</td></tr></table></div><div class="doc"><p>Generates a <code><a href="Data-Aeson-Types.html#t:ToJSON">ToJSON</a></code> instance declaration for the given data type.
+</p><p>Example:
+</p><pre>
+ data Foo = Foo <code>Char</code> <code>Int</code>
+ $(<code><a href="Data-Aeson-TH.html#v:deriveToJSON">deriveToJSON</a></code> <code><a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/base-4.6.0.1/Prelude.html#v:id">id</a></code> ''Foo)
+</pre><p>This will splice in the following code:
+</p><pre>
+ instance <code><a href="Data-Aeson-Types.html#t:ToJSON">ToJSON</a></code> Foo where
+      <code><a href="Data-Aeson-Types.html#v:toJSON">toJSON</a></code> =
+          \value -&gt; case value of
+                      Foo arg1 arg2 -&gt; <code><a href="Data-Aeson-Types.html#v:Array">Array</a></code> $ <code><a href="/Library/Haskell/ghc-7.6.3/lib/vector-0.10.0.1/doc/html/Data-Vector.html#v:create">create</a></code> $ do
+                        mv &lt;- <code><a href="/Library/Haskell/ghc-7.6.3/lib/vector-0.10.0.1/doc/html/Data-Vector-Mutable.html#v:unsafeNew">unsafeNew</a></code> 2
+                        <code><a href="/Library/Haskell/ghc-7.6.3/lib/vector-0.10.0.1/doc/html/Data-Vector-Mutable.html#v:unsafeWrite">unsafeWrite</a></code> mv 0 (<code><a href="Data-Aeson-Types.html#v:toJSON">toJSON</a></code> arg1)
+                        <code><a href="/Library/Haskell/ghc-7.6.3/lib/vector-0.10.0.1/doc/html/Data-Vector-Mutable.html#v:unsafeWrite">unsafeWrite</a></code> mv 1 (<code><a href="Data-Aeson-Types.html#v:toJSON">toJSON</a></code> arg2)
+                        return mv
+</pre></div></div><div class="top"><p class="src"><a name="v:deriveFromJSON" class="def">deriveFromJSON</a></p><div class="subs arguments"><p class="caption">Arguments</p><table><tr><td class="src">:: (<a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/base-4.6.0.1/Data-String.html#t:String">String</a> -&gt; <a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/base-4.6.0.1/Data-String.html#t:String">String</a>)</td><td class="doc"><p>Function to change field names.
+</p></td></tr><tr><td class="src">-&gt; <a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/template-haskell-2.8.0.0/Language-Haskell-TH-Syntax.html#t:Name">Name</a></td><td class="doc"><p>Name of the type for which to generate a <code><a href="Data-Aeson-Types.html#t:FromJSON">FromJSON</a></code> instance
+ declaration.
+</p></td></tr><tr><td class="src">-&gt; <a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/template-haskell-2.8.0.0/Language-Haskell-TH-Syntax.html#t:Q">Q</a> [<a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/template-haskell-2.8.0.0/Language-Haskell-TH-Syntax.html#t:Dec">Dec</a>]</td><td class="doc empty">&nbsp;</td></tr></table></div><div class="doc"><p>Generates a <code><a href="Data-Aeson-Types.html#t:FromJSON">FromJSON</a></code> instance declaration for the given data type.
+</p><p>Example:
+</p><pre>
+ data Foo = Foo Char Int
+ $(<code><a href="Data-Aeson-TH.html#v:deriveFromJSON">deriveFromJSON</a></code> id ''Foo)
+</pre><p>This will splice in the following code:
+</p><pre>
+ instance <code><a href="Data-Aeson-Types.html#t:FromJSON">FromJSON</a></code> Foo where
+     <code><a href="Data-Aeson-Types.html#v:parseJSON">parseJSON</a></code> =
+         \value -&gt; case value of
+                     <code><a href="Data-Aeson-Types.html#v:Array">Array</a></code> arr -&gt;
+                       if (V.length arr == 2)
+                       then Foo &lt;$&gt; <code><a href="Data-Aeson-Types.html#v:parseJSON">parseJSON</a></code> (arr <code><a href="/Library/Haskell/ghc-7.6.3/lib/vector-0.10.0.1/doc/html/Data-Vector.html#v:unsafeIndex">unsafeIndex</a></code> 0)
+                                &lt;*&gt; <code><a href="Data-Aeson-Types.html#v:parseJSON">parseJSON</a></code> (arr <code><a href="/Library/Haskell/ghc-7.6.3/lib/vector-0.10.0.1/doc/html/Data-Vector.html#v:unsafeIndex">unsafeIndex</a></code> 1)
+                       else fail &quot;&lt;error message&gt;&quot;
+                     other -&gt; fail &quot;&lt;error message&gt;&quot;
+</pre></div></div><div class="top"><p class="src"><a name="v:mkToJSON" class="def">mkToJSON</a></p><div class="subs arguments"><p class="caption">Arguments</p><table><tr><td class="src">:: (<a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/base-4.6.0.1/Data-String.html#t:String">String</a> -&gt; <a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/base-4.6.0.1/Data-String.html#t:String">String</a>)</td><td class="doc"><p>Function to change field names.
+</p></td></tr><tr><td class="src">-&gt; <a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/template-haskell-2.8.0.0/Language-Haskell-TH-Syntax.html#t:Name">Name</a></td><td class="doc"><p>Name of the type to encode.
+</p></td></tr><tr><td class="src">-&gt; <a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/template-haskell-2.8.0.0/Language-Haskell-TH-Syntax.html#t:Q">Q</a> <a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/template-haskell-2.8.0.0/Language-Haskell-TH-Syntax.html#t:Exp">Exp</a></td><td class="doc empty">&nbsp;</td></tr></table></div><div class="doc"><p>Generates a lambda expression which encodes the given data type as JSON.
+</p><p>Example:
+</p><pre>
+ data Foo = Foo Int
+</pre><pre>
+ encodeFoo :: Foo -&gt; <code><a href="Data-Aeson-Types.html#t:Value">Value</a></code>
+ encodeFoo = $(<code><a href="Data-Aeson-TH.html#v:mkToJSON">mkToJSON</a></code> id ''Foo)
+</pre><p>This will splice in the following code:
+</p><pre>
+ \value -&gt; case value of Foo arg1 -&gt; <code><a href="Data-Aeson-Types.html#v:toJSON">toJSON</a></code> arg1
+</pre></div></div><div class="top"><p class="src"><a name="v:mkParseJSON" class="def">mkParseJSON</a></p><div class="subs arguments"><p class="caption">Arguments</p><table><tr><td class="src">:: (<a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/base-4.6.0.1/Data-String.html#t:String">String</a> -&gt; <a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/base-4.6.0.1/Data-String.html#t:String">String</a>)</td><td class="doc"><p>Function to change field names.
+</p></td></tr><tr><td class="src">-&gt; <a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/template-haskell-2.8.0.0/Language-Haskell-TH-Syntax.html#t:Name">Name</a></td><td class="doc"><p>Name of the encoded type.
+</p></td></tr><tr><td class="src">-&gt; <a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/template-haskell-2.8.0.0/Language-Haskell-TH-Syntax.html#t:Q">Q</a> <a href="/Library/Frameworks/GHC.framework/Versions/7.6.3-x86_64/usr/share/doc/ghc/html/libraries/template-haskell-2.8.0.0/Language-Haskell-TH-Syntax.html#t:Exp">Exp</a></td><td class="doc empty">&nbsp;</td></tr></table></div><div class="doc"><p>Generates a lambda expression which parses the JSON encoding of the given
+ data type.
+</p><p>Example:
+</p><pre>
+ data Foo = Foo <code>Int</code>
+</pre><pre>
+ parseFoo :: <code><a href="Data-Aeson-Types.html#t:Value">Value</a></code> -&gt; <code><a href="Data-Aeson-Types.html#t:Parser">Parser</a></code> Foo
+ parseFoo = $(<code><a href="Data-Aeson-TH.html#v:mkParseJSON">mkParseJSON</a></code> id ''Foo)
+</pre><p>This will splice in the following code:
+</p><pre>
+ \value -&gt; case value of arg -&gt; Foo &lt;$&gt; <code><a href="Data-Aeson-Types.html#v:parseJSON">parseJSON</a></code> arg
+</pre></div></div></div></div><div id="footer"><p>Produced by <a href="http://www.haskell.org/haddock/">Haddock</a> version 2.13.2</p></div></body></html>
