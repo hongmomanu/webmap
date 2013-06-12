@@ -5,9 +5,9 @@ Ext.Loader.setConfig({
     enabled: true,
     disableCaching: false,
     paths: {
-        GeoExt: "../../../src/GeoExt",
+        GeoExt: "static/javascripts/geoext4/src/GeoExt",
         // for dev use
-        Ext: "http://cdn.sencha.io/ext-4.1.0-gpl/src"
+        Ext: "http://cdn.sencha.io/ext-4.2.0-gpl/src"
         // for build purpose
         //Ext: "extjs-4.1.0/src"
     }
@@ -20,7 +20,7 @@ Ext.Loader.setConfig({
  */
 Ext.application({
     name: 'CF',
-    appFolder: 'app',
+    appFolder: 'static/javascripts/app',
     controllers: [
         'Map'
     ],

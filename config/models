@@ -14,4 +14,15 @@ Article
     content Html
     deriving
 
+Mapcache
+    taskid    Int64
+    uptime    UTCTime
+    x         Int64
+    y         Int64
+    z         Int64
+    issuccess Bool
+    img       ByteString
+
+
+
  -- By default this file is used in Model.hs (which is imported by Foundation.hs)

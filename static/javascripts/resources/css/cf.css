@@ -22,3 +22,14 @@
 .cf-helpwindow h2 {
     margin: 2px 0 0 0;
 }
+.navigation-grid .x-grid-rowbody {
+    margin: 5px 20px 10px 25px !important;
+    color: #555;
+    font-size: 11px;
+}
+.navitem-div {
+
+    line-height:60px;
+    text-align: center;
+    height: 60px;
+}

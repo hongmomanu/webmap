@@ -5,8 +5,8 @@
 Ext.define('CF.controller.Map', {
     extend: 'Ext.app.Controller',
 
-    models: ['Summit'],
-    stores: ['Summits'],
+    models: ['Summit','Mission'],
+    stores: ['Summits','Missions'],
 
     refs: [
         {ref: 'summitChart', selector: 'summitchart'},
@@ -24,9 +24,32 @@ Ext.define('CF.controller.Map', {
         this.control({
             'cf_mappanel': {
                 'beforerender': this.onMapPanelBeforeRender
+            },
+            'missiongrid':{
+                itemclick: this.showContent
             }
         }, this);
     },
+
+    showContent: function(grid, record) {
+        console.log('Double clicked on ' + record.get('label'));
+        var label=record.get('label');
+        var tabs=Ext.getCmp('mainContent-panel');
+        if(tabs.getComponent('tab'+label)){
+            tabs.getComponent('tab'+label).show();
+        }else{
+            tabs.add({
+                closable: true,
+
+                id: 'tab'+label,
+                html: 'Tab Body ' + label+ '<br/><br/>',
+                iconCls: 'tabs',
+                title: label
+            }).show();
+        }
+
+
+    } ,
 
     onMapPanelBeforeRender: function(mapPanel, options) {
         var me = this;
@@ -69,7 +92,7 @@ Ext.define('CF.controller.Map', {
                 'default': style
             }),
             protocol: new OpenLayers.Protocol.HTTP({
-                url: "../../data/summits.json",
+                url: "static/javascripts/data/summits.json",
                 format: new OpenLayers.Format.GeoJSON()
             }),
             strategies: [new OpenLayers.Strategy.Fixed()]
