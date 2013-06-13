@@ -2,29 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a612932-389f-4d2d-af5b-7a65036bf90d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/javascripts/app/model/Mission.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/javascripts/app/store/Missions.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Bussiness/Tianditu.hs" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/javascripts/app/view/navigation/missionGrid.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/javascripts/data/summits.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/javascripts/data/wfs_desc_ftype.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/javascripts/data/wfscap_tiny_100.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/javascripts/data/wmscap.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cabal-dev/packages-7.6.3.conf/package.cache" afterPath="$PROJECT_DIR$/cabal-dev/packages-7.6.3.conf/package.cache" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application.hs" afterPath="$PROJECT_DIR$/Application.hs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Handler/Home.hs" afterPath="$PROJECT_DIR$/Handler/Home.hs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Handler/Image.hs" afterPath="$PROJECT_DIR$/Handler/Image.hs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/javascripts/app/controller/Map.js" afterPath="$PROJECT_DIR$/static/javascripts/app/controller/Map.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Model.hs" afterPath="$PROJECT_DIR$/Model.hs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/javascripts/app/view/Viewport.js" afterPath="$PROJECT_DIR$/static/javascripts/app/view/Viewport.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/javascripts/app.js" afterPath="$PROJECT_DIR$/static/javascripts/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cabal-dev/logs/build.log" afterPath="$PROJECT_DIR$/cabal-dev/logs/build.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/javascripts/resources/css/cf.css" afterPath="$PROJECT_DIR$/static/javascripts/resources/css/cf.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/homepage.hamlet" afterPath="$PROJECT_DIR$/templates/homepage.hamlet" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/homepage.julius" afterPath="$PROJECT_DIR$/templates/homepage.julius" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/models" afterPath="$PROJECT_DIR$/config/models" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webmap.cabal" afterPath="$PROJECT_DIR$/webmap.cabal" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Bussiness/Tianditu.hs" afterPath="$PROJECT_DIR$/Bussiness/Tianditu.hs" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <list id="6afa7a7e-10e3-4132-9ef6-2bb22b989637" name="Failed commit: Default" comment="geoext2">
@@ -34,7 +12,7 @@
     <ignored path=".idea/workspace.xml" />
     <file path="/a.dummy" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1370873187105" ignored="false" />
     <file path="/Image.hs" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1371040739213" ignored="false" />
-    <file path="/Dummy.txt" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1371014717331" ignored="false" />
+    <file path="/Dummy.txt" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1371134153284" ignored="false" />
     <file path="/Home.hs" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1370843035668" ignored="false" />
     <file path="/Viewport.js" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1370848397609" ignored="false" />
     <file path="/Mission.js" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1370847635678" ignored="false" />
@@ -49,7 +27,7 @@
     <file path="/models" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1370875648289" ignored="false" />
     <file path="/Model.hs" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1370875698489" ignored="false" />
     <file path="/routes" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1370883576817" ignored="false" />
-    <file path="/Tianditu.hs" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1371019511964" ignored="false" />
+    <file path="/Tianditu.hs" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1371136819009" ignored="false" />
     <file path="$PROJECT_DIR$/dist/package.conf.inplace" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1370932578738" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -100,16 +78,7 @@
       <file leaf-file-name="Tianditu.hs" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Bussiness/Tianditu.hs">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="65" column="99" selection-start="2559" selection-end="2559" vertical-scroll-proportion="0.51724136">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="webmap.cabal" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/webmap.cabal">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="64" column="29" selection-start="2368" selection-end="2368" vertical-scroll-proportion="0.0">
+            <state line="67" column="13" selection-start="2560" selection-end="2560" vertical-scroll-proportion="0.8717949">
               <folding />
             </state>
           </provider>
@@ -137,15 +106,6 @@
         <entry file="file://$PROJECT_DIR$/templates/articles.hamlet">
           <provider selected="true" editor-type-id="text-editor">
             <state line="3" column="22" selection-start="79" selection-end="79" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="models" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/models">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="14" selection-start="254" selection-end="259" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -198,8 +158,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="417" />
-    <option name="y" value="339" />
+    <option name="x" value="405" />
+    <option name="y" value="22" />
     <option name="width" value="1327" />
     <option name="height" value="721" />
   </component>
@@ -229,6 +189,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -291,7 +252,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -300,8 +260,8 @@
     <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
     <property name="last_opened_file_path" value="$USER_HOME$/WebstormProjects" />
     <property name="FullScreen" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -369,7 +329,11 @@
       <created>1370842248312</created>
       <updated>1370842248312</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="geoext2">
+      <created>1371047220147</created>
+      <updated>1371047220147</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -393,15 +357,13 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="417" y="339" width="1327" height="721" extended-state="0" />
+    <frame x="405" y="22" width="1327" height="721" extended-state="0" />
     <editor active="false" />
     <layout>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32931727" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32996634" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.34824282" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21552373" sideWeight="0.6517572" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21552373" sideWeight="0.6517572" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32166302" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -410,6 +372,8 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.34824282" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32931727" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -479,44 +443,32 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/devel.hs">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/config/settings.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/config/sqlite.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/config/robots.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Model.hs">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="114" selection-start="502" selection-end="502" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="17" column="114" selection-start="502" selection-end="502" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/config/routes">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="53" selection-start="251" selection-end="251" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="12" column="53" selection-start="251" selection-end="251" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Foundation.hs">
@@ -528,9 +480,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/config/models">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="14" selection-start="254" selection-end="259" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="17" column="14" selection-start="254" selection-end="259" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/articles.hamlet">
@@ -561,16 +511,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/webmap.cabal">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="64" column="29" selection-start="2368" selection-end="2368" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Handler/Echo.hs">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webmap.cabal">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="64" column="29" selection-start="2368" selection-end="2368" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -584,7 +532,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Bussiness/Tianditu.hs">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="99" selection-start="2559" selection-end="2559" vertical-scroll-proportion="0.51724136">
+        <state line="67" column="13" selection-start="2560" selection-end="2560" vertical-scroll-proportion="0.8717949">
           <folding />
         </state>
       </provider>

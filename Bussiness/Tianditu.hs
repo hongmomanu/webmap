@@ -7,6 +7,8 @@ import qualified Data.Text as T
 import qualified Data.Map as Map
 import qualified Network.HTTP as Http
 import qualified Data.Int as Data
+import System.Timeout
+import Data.Maybe
 
 import Data.Time
 
@@ -37,7 +39,7 @@ calculateGridParams resolution minx maxy =
 
 mapCacheParams :: Int -> Float -> Float -> Float -> Float -> [[Data.Int64]]
 mapCacheParams level minx maxx miny maxy =
-    let caculateParams = calculateGridParams  (180.0 / (512.0 * (2 ^ (level - 1)) )) minx maxy
+    let caculateParams = calculateGridParams  (180.0 / (512.0 * (2 ^ (level - 2)) )) minx maxy
         tilelon  = caculateParams Map.! "tilelon"
         tilelat  = caculateParams Map.! "tilelat"
         tileoffsetlon = caculateParams Map.! "tileoffsetlon"
@@ -48,7 +50,7 @@ mapCacheParams level minx maxx miny maxy =
 getMapTilesXyNum   tileoffsetlon tileoffsetlat  tilelat tilelon  level =
     let coef = 360 /  2 ^ level
         x_num = round ((tileoffsetlon - topTileFromX) / coef)
-        y_num = round ((topTileFromY - (tileoffsetlat + tilelat)) / coef)
+        y_num = round ((topTileFromY - tileoffsetlat) / coef)
 
     in [x_num,y_num]
 
@@ -61,7 +63,9 @@ getMapTilesFromUrl x y z =do
                                         ("&TILECOL=" :: String ) ++ (show x)
 
     uptime <- liftIO $ getCurrentTime
-    img <- liftIO $ Http.simpleHTTP (Http.getRequest imgUrl) >>= Http.getResponseBody
+    maybeImg <- liftIO $ timeout 100000 ((Http.simpleHTTP (Http.getRequest imgUrl)) >>= Http.getResponseBody)
+    let img = fromMaybe "" maybeImg
+    liftIO $ print img
 
     mapcacheId <-  runDB $ insert $ Mapcache (1 :: Data.Int64) uptime x  y  z  False  (Bys.pack img)
 
