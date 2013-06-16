@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a612932-389f-4d2d-af5b-7a65036bf90d" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application.hs" afterPath="$PROJECT_DIR$/Application.hs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Handler/Image.hs" afterPath="$PROJECT_DIR$/Handler/Image.hs" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Bussiness/Tianditu.hs" afterPath="$PROJECT_DIR$/Bussiness/Tianditu.hs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/models" afterPath="$PROJECT_DIR$/config/models" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/routes" afterPath="$PROJECT_DIR$/config/routes" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webmap.cabal" afterPath="$PROJECT_DIR$/webmap.cabal" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <list id="6afa7a7e-10e3-4132-9ef6-2bb22b989637" name="Failed commit: Default" comment="geoext2">
@@ -12,7 +17,7 @@
     <ignored path=".idea/workspace.xml" />
     <file path="/a.dummy" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1370873187105" ignored="false" />
     <file path="/Image.hs" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1371040739213" ignored="false" />
-    <file path="/Dummy.txt" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1371134153284" ignored="false" />
+    <file path="/Dummy.txt" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1371297667727" ignored="false" />
     <file path="/Home.hs" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1370843035668" ignored="false" />
     <file path="/Viewport.js" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1370848397609" ignored="false" />
     <file path="/Mission.js" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1370847635678" ignored="false" />
@@ -24,11 +29,12 @@
     <file path="/tianditu.hs" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1371040319262" ignored="false" />
     <file path="/Application.hs" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1370866713992" ignored="false" />
     <file path="/webmap.cabal" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1370875356304" ignored="false" />
-    <file path="/models" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1370875648289" ignored="false" />
+    <file path="/models" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1371297866496" ignored="false" />
     <file path="/Model.hs" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1370875698489" ignored="false" />
     <file path="/routes" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1370883576817" ignored="false" />
-    <file path="/Tianditu.hs" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1371136819009" ignored="false" />
+    <file path="/Tianditu.hs" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1371351496419" ignored="false" />
     <file path="$PROJECT_DIR$/dist/package.conf.inplace" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1370932578738" ignored="false" />
+    <file path="/Tiles.hs" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1371306650224" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,15 +54,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Foundation.hs" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Foundation.hs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="52" column="139" selection-start="1862" selection-end="1862" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Blog.hs" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Handler/Blog.hs">
           <provider selected="true" editor-type-id="text-editor">
@@ -69,7 +66,7 @@
       <file leaf-file-name="Image.hs" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Handler/Image.hs">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="36" column="66" selection-start="1515" selection-end="1515" vertical-scroll-proportion="0.0">
+            <state line="19" column="35" selection-start="600" selection-end="618" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -78,7 +75,34 @@
       <file leaf-file-name="Tianditu.hs" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Bussiness/Tianditu.hs">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="67" column="13" selection-start="2560" selection-end="2560" vertical-scroll-proportion="0.8717949">
+            <state line="30" column="0" selection-start="654" selection-end="671" vertical-scroll-proportion="0.41340783">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Tiles.hs" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Handler/Tiles.hs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="16" column="112" selection-start="404" selection-end="404" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="webmap.cabal" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/webmap.cabal">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="70" column="19" selection-start="2545" selection-end="2545" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="models" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/models">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="24" column="19" selection-start="405" selection-end="405" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -87,7 +111,7 @@
       <file leaf-file-name="Application.hs" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Application.hs">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="55" column="79" selection-start="1762" selection-end="1762" vertical-scroll-proportion="0.0">
+            <state line="56" column="79" selection-start="1783" selection-end="1783" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -138,7 +162,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/static/javascripts/app/view/navigation/missionGrid.js" />
         <option value="$PROJECT_DIR$/static/javascripts/resources/css/cf.css" />
         <option value="$PROJECT_DIR$/static/javascripts/app/store/Missions.js" />
         <option value="$PROJECT_DIR$/static/javascripts/app/view/Viewport.js" />
@@ -148,18 +171,19 @@
         <option value="$PROJECT_DIR$/Handler/Tianditu.hs" />
         <option value="$PROJECT_DIR$/app/Tianditu.hs" />
         <option value="$PROJECT_DIR$/Application.hs" />
-        <option value="$PROJECT_DIR$/config/models" />
         <option value="$PROJECT_DIR$/Model.hs" />
         <option value="$PROJECT_DIR$/config/routes" />
+        <option value="$PROJECT_DIR$/config/models" />
         <option value="$PROJECT_DIR$/webmap.cabal" />
-        <option value="$PROJECT_DIR$/Handler/Image.hs" />
+        <option value="$PROJECT_DIR$/Handler/Tiles.hs" />
         <option value="$PROJECT_DIR$/Bussiness/Tianditu.hs" />
+        <option value="$PROJECT_DIR$/Handler/Image.hs" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="405" />
-    <option name="y" value="22" />
+    <option name="x" value="390" />
+    <option name="y" value="137" />
     <option name="width" value="1327" />
     <option name="height" value="721" />
   </component>
@@ -189,7 +213,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -232,6 +255,20 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webmap" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webmap" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="Bussiness" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -252,6 +289,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -260,8 +298,8 @@
     <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
     <property name="last_opened_file_path" value="$USER_HOME$/WebstormProjects" />
     <property name="FullScreen" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -333,7 +371,11 @@
       <created>1371047220147</created>
       <updated>1371047220147</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="geoext2">
+      <created>1371138163372</created>
+      <updated>1371138163372</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -357,13 +399,13 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="405" y="22" width="1327" height="721" extended-state="0" />
+    <frame x="390" y="137" width="1327" height="721" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32996634" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21552373" sideWeight="0.6517572" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21552373" sideWeight="0.6517572" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32166302" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -441,11 +483,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/devel.hs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/settings.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
@@ -478,11 +515,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/models">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="14" selection-start="254" selection-end="259" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/articles.hamlet">
       <provider selected="true" editor-type-id="text-editor">
         <state line="3" column="22" selection-start="79" selection-end="79" vertical-scroll-proportion="0.0">
@@ -492,7 +524,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Application.hs">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="79" selection-start="1762" selection-end="1762" vertical-scroll-proportion="0.0">
+        <state line="56" column="79" selection-start="1783" selection-end="1783" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -511,11 +543,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/webmap.cabal">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="64" column="29" selection-start="2368" selection-end="2368" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Handler/Echo.hs">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -523,16 +550,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/webmap.cabal">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="70" column="19" selection-start="2545" selection-end="2545" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/models">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="19" selection-start="405" selection-end="405" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Handler/Tiles.hs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="112" selection-start="404" selection-end="404" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Handler/Image.hs">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="66" selection-start="1515" selection-end="1515" vertical-scroll-proportion="0.0">
+        <state line="19" column="35" selection-start="600" selection-end="618" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Bussiness/Tianditu.hs">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="13" selection-start="2560" selection-end="2560" vertical-scroll-proportion="0.8717949">
+        <state line="30" column="0" selection-start="654" selection-end="671" vertical-scroll-proportion="0.41340783">
           <folding />
         </state>
       </provider>

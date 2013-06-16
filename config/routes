@@ -10,3 +10,4 @@
 /blog BlogR GET POST
 /blog/#ArticleId ArticleR GET
 /image ImageR GET
+/tiles TilesR GET

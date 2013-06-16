@@ -22,6 +22,7 @@ Mapcache
     z         Int64
     issuccess Bool
     img       ByteString
+    layerid   Int64
 
 
 

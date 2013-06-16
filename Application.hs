@@ -27,6 +27,7 @@ import Handler.Mirror
 import Handler.Blog
 import Handler.Article
 import Handler.Image
+import Handler.Tiles
 
 
 -- This line actually creates our YesodDispatch instance. It is the second half
