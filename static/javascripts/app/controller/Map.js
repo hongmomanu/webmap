@@ -62,7 +62,21 @@ Ext.define('CF.controller.Map', {
             "http://vmap0.tiles.osgeo.org/wms/vmap0?",
             {layers: 'basic'}
         );
-        layers.push(wms);
+        var tianditu_layer=new OpenLayers.Layer.TiandituLayer(1,
+            //mapserverUrl+'?mapower='+mapower+"&maplabel="+maplabel
+            "http://127.0.0.1:3000/tiles?layerid=1"
+            ,{
+                //mapType:"tian",
+                //id:"layerid",
+                isBaseLayer:true,
+                topLevel: 1,
+                bottomLevel: 20,
+                maxExtent: (new OpenLayers.Bounds(-180, -90, 180, 90)).transform(new OpenLayers.Projection("EPSG:4326"),mapPanel.map.getProjectionObject())
+                //mirrorUrls:mirrorUrls
+            });
+
+        layers.push(tianditu_layer);
+        //layers.push(wms);
 
         // create vector layer
         var context = {
@@ -116,6 +130,13 @@ Ext.define('CF.controller.Map', {
         // for dev purpose
         map = mapPanel.map;
         mapPanel = mapPanel;
+
+        var lon = 120.144;
+        var lat = 30.246;
+        var zoom = 12;
+        var center= new OpenLayers.LonLat(lon, lat);
+        map.setCenter(center, zoom);
+
     },
 
     onLaunch: function() {
@@ -128,9 +149,16 @@ Ext.define('CF.controller.Map', {
     onSummitsStoreLoad: function(store, records) {
         // do custom stuff on summits load if you want, for example here we
         // zoom to summits extent
+        alert(2);
+        var lon = 120.144;
+        var lat = 30.246;
+        var zoom = 12;
+        var center= new OpenLayers.LonLat(lon, lat);
+        store.layer.map.setCenter(center, zoom);
+        alert(1);
         var dataExtent = store.layer.getDataExtent();
         if (dataExtent) {
-            store.layer.map.zoomToExtent(dataExtent);
+            //store.layer.map.zoomToExtent(dataExtent);
         }
     }
 });

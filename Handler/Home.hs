@@ -23,7 +23,9 @@ getHomeR = do
         addStylesheet $ StaticR javascripts_resources_css_cf_css
         addScriptRemote   "http://openlayers.org/api/2.12-rc3/OpenLayers.js"
         addScriptRemote   "http://cdn.sencha.io/ext-4.2.0-gpl/ext-debug.js"
+        addScript $ StaticR javascripts_openlayersTiandi_js
         addScript $ StaticR  javascripts_app_js
+
 
         $(widgetFile "homepage")
 

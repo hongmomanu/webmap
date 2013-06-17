@@ -67,6 +67,7 @@ library
                  , containers
                  , extensible-exceptions
                  , monad-peel
+                 , random
                  , HTTP
                  , http-types
                  , hamlet                        >= 1.1        && < 1.2
