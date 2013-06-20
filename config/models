@@ -24,6 +24,63 @@ Mapcache
     img       ByteString
     layerid   Int64
 
+Mapserver
+   mapower Text  --地图提供商
+   owername Text --地图提供商中文名
+   spatialreference Text --空间参考
+   projection Text --投影
+   maptype Int --0:web,1:arcgiscache
+   updatetime UTCTime --更新时间
+
+
+Maptype
+   mapowerid MapserverId --外键
+   mapname  Text --地图名称
+   maplabel Text --地图标示
+   ispublic Bool --服务是否发布
+   updatetime UTCTime --更新时间
+
+
+Layertype
+   mapid MaptypeId --地图id(外键)
+   layername  Text --图层名称
+   layerlabel Text --图层标示
+   minlevel Int --最小级别
+   maxlevel Int --最大级别
+   updatetime UTCTime --更新时间
+
+
+Layerlevel
+   layerid LayertypeId --图层id(外键)
+   updatetime  UTCTime --更新时间
+   layerlevel Int --图层级别
+   resolution Double --比例尺
+   scale Double --图层的分辨率
+
+
+Task
+   levelid LayerlevelId --层级id(外键)
+   maxx Double --左上角经度
+   minx Double --左上角纬度
+   maxy Double --右下角经度
+   miny Double --右下角纬度
+   username Text --任务人
+   state Int --状态(1任务进行中，2任务完成，0任务失败,-1任务初始化)
+   bgtm UTCTime --开始时间
+   edtm UTCTime --结束时间
+   errormsg Text --异常信息
+
+
+
+
+Users
+	username Text --用户名
+	nickname Text --昵称
+	usertype Int  --用户类型（0,系统管理员；1,一般用户）
+	logintime UTCTime  --最新登录时间
+	passwd Text
+
+
 
 
  -- By default this file is used in Model.hs (which is imported by Foundation.hs)

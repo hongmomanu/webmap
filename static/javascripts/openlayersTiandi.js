@@ -1,7 +1,6 @@
 //alert(2);    
 OpenLayers.Layer.TiandituLayer = OpenLayers.Class(OpenLayers.Layer.Grid, {
 
-
     mapType: null,
     mirrorUrls: null,
     topLevel: null,
@@ -15,9 +14,7 @@ OpenLayers.Layer.TiandituLayer = OpenLayers.Class(OpenLayers.Layer.Grid, {
     topTileToX: 180,
     topTileToY: -270,
 
-
     isBaseLayer: true,
-
 
     initialize: function (name, url, options) {
 
@@ -56,67 +53,6 @@ OpenLayers.Layer.TiandituLayer = OpenLayers.Class(OpenLayers.Layer.Grid, {
         var y_num = this.topTileFromY < this.topTileToY ? Math.round((bounds.bottom - this.topTileFromY) / coef) : Math.round((this.topTileFromY - bounds.top) / coef);
 
         return this.url + "/" + level + "/" + x_num + "/" + y_num + ".png";
-        var type = this.mapType;
-        if (type == "EMap") {
-            if (level >= 1 && level <= 10) {
-                type = "A0512_EMap";
-            } else if (level == 11 || level == 12) {
-                type = "B0627_EMap1112";
-            } else if (level >= 13 && level <= 18) {
-                type = "siwei0608";
-            }
-        }
-        if (type == "Eanno") {
-            if (level >= 1 && level <= 10) {
-                type = "AB0512_Anno";
-            } else if (level >= 11 && level <= 18) {
-                type = "tdt_vec_anno_dong_11_18";
-            }
-
-        }
-
-        if (type == "ESatelliteAnno") {
-            if (level >= 1 && level <= 10) {
-                //type = "sbsm0210";
-                type = "A0610_ImgAnno";
-            } else if (level == 11 || level == 12 || level == 13) {
-                type = "E" + level;
-            } else if (level == 14) {
-                type = "eastdawnall";
-            } else if (level >= 15 && level <= 18) {
-                type = "sbsm1518";
-            }
-        }
-
-        if (type == "ESatellite") {
-            if (level >= 1 && level <= 10) {
-                //type = "sbsm0210";
-                type = "tdt_vip_img_2_10_120627";
-            } else if (level == 11 || level == 12 || level == 13) {
-                type = "e" + level;
-            } else if (level == 14) {
-                type = "eastdawnall";
-            } else if (level >= 15 && level <= 18) {
-                type = "sbsm1518";
-            }
-        }
-        //以下2个已经失效
-        if (type == "EDEM") {
-            type = "J07098";
-        }
-        if (type == "EAddress") {
-            type = "wfs";
-        }
-        var url = this.url;
-        if (this.mirrorUrls != null) {
-            url = this.selectUrl(x_num, this.mirrorUrls);
-        }
-        return this.getFullRequestString({
-            T: type,
-            X: x_num,
-            Y: y_num,
-            L: level
-        }, url);
     },
     selectUrl: function (a, b) {
         return b[a % b.length]

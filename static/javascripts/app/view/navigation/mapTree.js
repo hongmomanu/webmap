@@ -7,23 +7,23 @@
  */
 
 
-Ext.define('CF.view.navigation.mapTree' ,{
+Ext.define('CF.view.navigation.mapTree', {
     extend: 'Ext.tree.Panel',
-    alias : 'widget.mapTree',
-     requires: [
+    alias: 'widget.mapTree',
+    requires: [
         'Ext.tree.*',
         'Ext.data.*'
-     ],
+    ],
     xtype: 'tree-reorder',
-    
-    
+
+
     //height: 400,
     //width: 350,
     title: 'Files',
     useArrows: true,
-    initComponent: function() {
+    initComponent: function () {
         Ext.apply(this, {
-           	store: new Ext.data.TreeStore({
+            store: new Ext.data.TreeStore({
                 proxy: {
                     type: 'ajax',
                     url: 'maptree'
@@ -34,10 +34,12 @@ Ext.define('CF.view.navigation.mapTree' ,{
                     expanded: true
                 },
                 folderSort: true,
-                sorters: [{
-                    property: 'text',
-                    direction: 'ASC'
-                }]
+                sorters: [
+                    {
+                        property: 'text',
+                        direction: 'ASC'
+                    }
+                ]
             }),
             viewConfig: {
                 plugins: {
