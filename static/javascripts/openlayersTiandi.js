@@ -1,4 +1,3 @@
-//alert(2);    
 OpenLayers.Layer.TiandituLayer = OpenLayers.Class(OpenLayers.Layer.Grid, {
 
     mapType: null,
