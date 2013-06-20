@@ -15,6 +15,7 @@ Ext.define('CF.view.Viewport', {
         'CF.view.Map',
         'CF.view.summit.Chart',
         'CF.view.navigation.missionGrid',
+        'CF.view.navigation.managerGrid',
         'CF.view.navigation.mapTree',
         'CF.view.summit.Grid'
     ],
@@ -59,10 +60,15 @@ Ext.define('CF.view.Viewport', {
                                 }
                             ],
 
-                            iconCls: '服务配置'
+                            iconCls: 'nav'
                         }, {
-                            title: 'Information',
-                            html: '<p>Some info in here.</p>',
+                            title: '服务配置',
+                            items:[
+                                {
+                                    xtype:'managergrid'
+                            }
+                            ],
+                            //html: '<p>Some info in here.</p>',
                             iconCls: 'info'
                         }]
                     },
