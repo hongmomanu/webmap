@@ -18,6 +18,10 @@ import Control.Concurrent (threadDelay,forkIO)
 import Data.Time
 import Data.ByteString.Lazy as LBS
 import System.Random
+import Database.Persist
+import Database.Persist.Sqlite
+import Database.Persist.TH
+import System.Directory
 
 import qualified Data.ByteString.Char8 as Bys
 fun1 :: Text -> Text
@@ -76,30 +80,16 @@ getMapTilesFromUrl x y z =do
                                             ("&TILECOL=" :: String ) ++ (show x)
 
     uptime <- liftIO $ getCurrentTime
-
-    --req <- parseUrl "http://t0.tianditu.cn/vec_c/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=vec&TILEMATRIXSET=c&TILEMATRIX=13&TILEROW=1349&TILECOL=6781"
-    --let req2=req {method = "GET",requestHeaders=[("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:16.0) Gecko/20100101 Firefox/16.0") :: H.Header]}
-    --res  <- liftIO $  ( safeQuery   req2)
-    --res <- withManager $ httpLbs req2
-    --let img =responseBody res
-
-    --maybeImg <- liftIO $ timeout 100000 ((Http.simpleHTTP (Http.getRequest imgUrl)) >>= Http.getResponseBody)
-    --let img = fromMaybe "" maybeImg
-    --liftIO $ print img
-    --img <- liftIO $ Http.simpleHTTP (Http.getRequest imgUrl) >>= Http.getResponseBody
     img  <- liftIO $  safeQueryEasy imgUrl
-    mapcacheId <-  runDB $ insert $ Mapcache (1 :: Data.Int64) uptime x  y  z  False    (Bys.pack img) (1 :: Data.Int64)
-    --mapcacheId <-  safeInsertImg  (1 :: Data.Int64) uptime x  y  z  False    (Bys.pack img) (1 :: Data.Int64)
-
-    -- let img = Http.simpleHTTP (Http.getRequest imgUrl) >>= Http.getResponseBody
-
+    mapcacheId <-  runDB $ test  (1 :: Data.Int64) uptime x  y  z  False    (Bys.pack img) (1 :: Data.Int64)
     $(logDebug) (T.pack imgUrl)
 
 
+test taskid tm x y z issuc img layerid =withSqliteConn ":memory:" $  runSqlConn $ do
+    runMigration migrateAll
 
-imgsaveInsert taskid tm x y z issuc img layerid= do
-    E.catch (insert $ Mapcache taskid tm x y z issuc img layerid)(\e -> print (e :: E.SomeException) >> threadDelay 1 >> imgsaveInsert taskid tm x y z issuc img layerid)
-    print "haha"
+    insert $ Mapcache taskid tm x y z issuc img layerid
+    
 
 tilesUlrFilter x_param y_param z_param layerid_param =
     let x =case x_param of
@@ -120,17 +110,42 @@ tilesUlrFilter x_param y_param z_param layerid_param =
                 Nothing -> error "no layerid param"
 
     in [x,y,z,layerid]
+--参数过滤
+getImgUlrFilter z_param maxx_param maxy_param minx_param miny_param layerid_param =
+    let z     = case z_param of
+                  Just "" -> error "z 无值"
+                  Just info -> info
+                  Nothing -> error "no LLLL param"
+        maxx  = case maxx_param of
+                  Just "" -> error "maxx 无值"
+                  Just info -> info
+                  Nothing -> error "no maxxParam param"          
+        maxy  = case maxy_param of
+                  Just "" -> error "maxy 无值"
+                  Just info -> info
+                  Nothing -> error "no maxyParam param" 
+        minx  = case minx_param of
+                  Just "" -> error "minx 无值"
+                  Just info -> info
+                  Nothing -> error "no minxParam param"
+        miny  = case miny_param of
+                  Just "" -> error "miny 无值"
+                  Just info -> info
+                  Nothing -> error "no minyParam param" 
+        layerid = case layerid_param of
+                    Just "" -> error "layerid 无值"
+                    Just info -> info
+                    Nothing -> error "no layeridParam param" 
+       
 
-getImgUlrFilter z_param =
-    let z =case z_param of
-                Just "" -> error "z 无值"
-                Just info -> info
-                Nothing -> error "no z param"
-
-    in [z]
+    in [z,maxx,maxy,minx,miny,layerid]
 
 
+--写入瓦片缓存,不管文件是否存在
+writeTileCache layerid x y z = do
+    createDirectoryIfMissing  True "/home/jack/test/test"
 
+    writeFile "/home/jack/output.txt" "str"
 
 
 

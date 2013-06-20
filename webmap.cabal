@@ -26,6 +26,7 @@ library
                      Handler.Article
                      Handler.Image
                      Handler.Tiles
+                     Handler.Maptree
                      Bussiness.Tianditu
 
 

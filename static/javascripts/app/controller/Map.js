@@ -64,7 +64,7 @@ Ext.define('CF.controller.Map', {
         );
         var tianditu_layer=new OpenLayers.Layer.TiandituLayer(1,
             //mapserverUrl+'?mapower='+mapower+"&maplabel="+maplabel
-            "http://127.0.0.1:3000/tiles?layerid=1"
+            "http://127.0.0.1/gnc/1"
             ,{
                 //mapType:"tian",
                 //id:"layerid",
@@ -149,7 +149,6 @@ Ext.define('CF.controller.Map', {
     onSummitsStoreLoad: function(store, records) {
         // do custom stuff on summits load if you want, for example here we
         // zoom to summits extent
-        alert(2);
         var lon = 120.144;
         var lat = 30.246;
         var zoom = 12;

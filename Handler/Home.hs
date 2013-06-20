@@ -18,11 +18,11 @@ getHomeR = do
     defaultLayout $ do
         aDomId <- newIdent
         setTitle "Welcome To Yesod!"
-        addStylesheetRemote   "http://cdn.sencha.io/ext-4.2.0-gpl/resources/css/ext-all.css"
-        addStylesheetRemote   "http://openlayers.org/api/2.12-rc3/theme/default/style.css"
+        addStylesheetRemote   "http://localhost/ext-4.2.1/resources/css/ext-all.css"
+        addStylesheetRemote   "http://localhost/OpenLayers-2.13/theme/default/style.css"
         addStylesheet $ StaticR javascripts_resources_css_cf_css
-        addScriptRemote   "http://openlayers.org/api/2.12-rc3/OpenLayers.js"
-        addScriptRemote   "http://cdn.sencha.io/ext-4.2.0-gpl/ext-debug.js"
+        addScriptRemote   "http://localhost/OpenLayers-2.13/OpenLayers.js"
+        addScriptRemote   "http://localhost/ext-4.2.1/ext-debug-w-comments.js"
         addScript $ StaticR javascripts_openlayersTiandi_js
         addScript $ StaticR  javascripts_app_js
 

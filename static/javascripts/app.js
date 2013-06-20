@@ -7,7 +7,7 @@ Ext.Loader.setConfig({
     paths: {
         GeoExt: "static/javascripts/geoext4/src/GeoExt",
         // for dev use
-        Ext: "http://cdn.sencha.io/ext-4.2.0-gpl/src"
+        Ext: "http://localhost/ext-4.2.1/src"
         // for build purpose
         //Ext: "extjs-4.1.0/src"
     }

@@ -55,7 +55,7 @@ OpenLayers.Layer.TiandituLayer = OpenLayers.Class(OpenLayers.Layer.Grid, {
     var x_num = this.topTileFromX < this.topTileToX ? Math.round((bounds.left - this.topTileFromX) / coef) : Math.round((this.topTileFromX - bounds.right) / coef);
     var y_num = this.topTileFromY < this.topTileToY ? Math.round((bounds.bottom - this.topTileFromY) / coef) : Math.round((this.topTileFromY - bounds.top) / coef);
 
-
+    return this.url+"/"+level+"/"+x_num+"/"+y_num+".png";
     var type = this.mapType;
     if (type == "EMap") {
     if (level >= 1 && level <= 10) {

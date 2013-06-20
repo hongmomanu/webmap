@@ -29,6 +29,7 @@ import Handler.Article
 import Handler.Image
 import Handler.Tiles
 import Handler.Tiles
+import Handler.Maptree
 
 
 -- This line actually creates our YesodDispatch instance. It is the second half

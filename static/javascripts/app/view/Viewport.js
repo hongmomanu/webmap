@@ -15,6 +15,7 @@ Ext.define('CF.view.Viewport', {
         'CF.view.Map',
         'CF.view.summit.Chart',
         'CF.view.navigation.missionGrid',
+        'CF.view.navigation.mapTree',
         'CF.view.summit.Grid'
     ],
 
@@ -43,18 +44,22 @@ Ext.define('CF.view.Viewport', {
                         margins: '0 0 0 5',
                         layout: 'accordion',
                         items: [{
-                            html: '<p>Some settings in here.</p>',
-                            title: 'Navigation',
+                            //html: '<p>Some settings in here.</p>',
+                            items:[
+                            							{xtype:'mapTree'}
+                            					],
+                            	layout: 'fit',
+                            title: '图层导航',
                             iconCls: 'nav' // see the HEAD section for style used
                         }, {
-                            title: 'Settings',
+                            title: '任务管理',
                             items:[
                                 {
                                    xtype:'missiongrid'
                                 }
                             ],
 
-                            iconCls: 'settings'
+                            iconCls: '服务配置'
                         }, {
                             title: 'Information',
                             html: '<p>Some info in here.</p>',
