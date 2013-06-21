@@ -26,7 +26,6 @@ getHomeR = do
         addScript $ StaticR javascripts_openlayersTiandi_js
         addScript $ StaticR  javascripts_app_js
 
-
         $(widgetFile "homepage")
 
 postHomeR :: Handler RepHtml
