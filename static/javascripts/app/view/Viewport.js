@@ -66,10 +66,17 @@ Ext.define('CF.view.Viewport', {
                             items:[
                                 {
                                     xtype:'managergrid'
-                            }
+                                }
                             ],
-                            //html: '<p>Some info in here.</p>',
-                            iconCls: 'info'
+
+                            iconCls: 'nav'
+                            /*items:[
+                                {
+                                    xtype:'managergrid'
+                            }
+                            ],*/
+                            /*html: '<p>Some info in here.</p>',
+                            iconCls: 'info'*/
                         }]
                     },
 

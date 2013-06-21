@@ -40,7 +40,7 @@ Ext.define('CF.view.navigation.managerGrid' ,{
         });
         this.callParent(arguments);
         // store singleton selection model instance
-        CF.view.navigation.magagerGrid.selectionModel = this.getSelectionModel();
+        CF.view.navigation.managerGrid.selectionModel = this.getSelectionModel();
 
     },
     formatLable:function(value, p, record) {

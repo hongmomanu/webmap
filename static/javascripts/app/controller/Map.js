@@ -5,8 +5,8 @@
 Ext.define('CF.controller.Map', {
     extend: 'Ext.app.Controller',
 
-    models: ['Summit','Mission'],
-    stores: ['Summits','Missions'],
+    models: ['Summit','Mission','Manager'],
+    stores: ['Summits','Missions','Managers'],
 
     refs: [
         {ref: 'summitChart', selector: 'summitchart'},
@@ -26,6 +26,9 @@ Ext.define('CF.controller.Map', {
                 'beforerender': this.onMapPanelBeforeRender
             },
             'missiongrid':{
+                itemclick: this.showContent
+            },
+            'managergrid':{
                 itemclick: this.showContent
             }
         }, this);
@@ -154,7 +157,6 @@ Ext.define('CF.controller.Map', {
         var zoom = 12;
         var center= new OpenLayers.LonLat(lon, lat);
         store.layer.map.setCenter(center, zoom);
-        alert(1);
         var dataExtent = store.layer.getDataExtent();
         if (dataExtent) {
             //store.layer.map.zoomToExtent(dataExtent);
