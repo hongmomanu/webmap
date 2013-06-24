@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="5a612932-389f-4d2d-af5b-7a65036bf90d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Foundation.hs" afterPath="$PROJECT_DIR$/Foundation.hs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Handler/Home.hs" afterPath="$PROJECT_DIR$/Handler/Home.hs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/javascripts/app/controller/Map.js" afterPath="$PROJECT_DIR$/static/javascripts/app/controller/Map.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/javascripts/app/view/Viewport.js" afterPath="$PROJECT_DIR$/static/javascripts/app/view/Viewport.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/javascripts/app/view/navigation/managerGrid.js" afterPath="$PROJECT_DIR$/static/javascripts/app/view/navigation/managerGrid.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/javascripts/openlayersTiandi.js" afterPath="$PROJECT_DIR$/static/javascripts/openlayersTiandi.js" />
     </list>
     <list id="6afa7a7e-10e3-4132-9ef6-2bb22b989637" name="Failed commit: Default" comment="geoext2">
@@ -3272,7 +3268,7 @@
     <ignored path=".idea/workspace.xml" />
     <file path="/a.dummy" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1371778498995" ignored="false" />
     <file path="/Image.hs" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1371456517709" ignored="false" />
-    <file path="/Dummy.txt" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1371808471737" ignored="false" />
+    <file path="/Dummy.txt" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1372042627800" ignored="false" />
     <file path="/Home.hs" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1371453057906" ignored="false" />
     <file path="/Viewport.js" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1371721435242" ignored="false" />
     <file path="/Mission.js" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1370847635678" ignored="false" />
@@ -3293,7 +3289,7 @@
     <file path="$USER_HOME$/IdeaProjects/developer/app.js" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1371449808390" ignored="false" />
     <file path="$USER_HOME$/IdeaProjects/developer/routes/index.js" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1371449827167" ignored="false" />
     <file path="/Maptree.hs" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1371718773330" ignored="false" />
-    <file path="$PROJECT_DIR$/.idea/workspace.xml" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1371779766617" ignored="false" />
+    <file path="$PROJECT_DIR$/.idea/workspace.xml" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1371808764227" ignored="false" />
     <file path="/managerGrid.js" changelist="5a612932-389f-4d2d-af5b-7a65036bf90d" time="1371777802021" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -3344,7 +3340,7 @@
       <file leaf-file-name="Map.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/static/javascripts/app/controller/Map.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="43" column="41" selection-start="1187" selection-end="1187" vertical-scroll-proportion="0.027777778">
+            <state line="59" column="62" selection-start="1523" selection-end="1523" vertical-scroll-proportion="0.4722222">
               <folding />
             </state>
           </provider>
@@ -3494,7 +3490,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -3751,16 +3746,17 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="options.lastSelected" value="appearance" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/soft/hongmomanu.github.com" />
     <property name="FullScreen" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -3868,7 +3864,19 @@
       <created>1371722380629</created>
       <updated>1371722380629</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="geoext2">
+      <created>1371808558493</created>
+      <updated>1371808558493</updated>
+    </task>
+    <task id="LOCAL-00017" summary="geoext2">
+      <created>1371808579085</created>
+      <updated>1371808579086</updated>
+    </task>
+    <task id="LOCAL-00018" summary="geoext2">
+      <created>1371808599864</created>
+      <updated>1371808599864</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -3893,12 +3901,12 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-2" y="0" width="1370" height="744" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32996634" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19061802" sideWeight="0.6533333" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19061802" sideWeight="0.6533333" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32166302" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -3956,7 +3964,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="222" />
+    <option name="LAST_COMMIT_MESSAGE" value="geoext2" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -3970,8 +3978,8 @@
     <option name="UPDATE_FILTER_BY_SCOPE" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="geoext2" />
     <MESSAGE value="222" />
+    <MESSAGE value="geoext2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -4026,13 +4034,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/javascripts/app/model/Mission.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="186" selection-end="346" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/javascripts/app/view/Map.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -4082,9 +4083,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/static/javascripts/app/model/Mission.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="0" selection-start="186" selection-end="346" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/static/javascripts/app/controller/Map.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="41" selection-start="1187" selection-end="1187" vertical-scroll-proportion="0.027777778">
+        <state line="59" column="62" selection-start="1523" selection-end="1523" vertical-scroll-proportion="0.4722222">
           <folding />
         </state>
       </provider>

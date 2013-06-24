@@ -1,5 +1,6 @@
-<h1>_{MsgHello}
+<div id="loading-mask" style="">
+<div id="loading">
+    <div class="loading-indicator">
+        <img src="static/img/extanim32.gif" width="32" height="32" style="margin-right:8px;float:left;vertical-align:top;"/>
 <div id="help">
-        <p>
-          This example demonstrates how the Ext MVC application structure
-          can be used with GeoExt and OpenLayers components.
+

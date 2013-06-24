@@ -36,18 +36,21 @@ Ext.define('CF.view.Viewport', {
                         region: 'west',
                         id: 'west-panel', // see Ext.getCmp() below
                         title: '导航栏',
-                        split: true,
+                        split: false,
                         width: 200,
+                        style: {
+                             border: 'none'
+                        },
                         minWidth: 175,
                         maxWidth: 400,
                         collapsible: true,
                         animCollapse: true,
-                        margins: '0 0 0 5',
+                        margins: '0 0 0 0',
                         layout: 'accordion',
                         items: [{
                             //html: '<p>Some settings in here.</p>',
                             items:[
-                            							{xtype:'mapTree'}
+                           							{xtype:'mapTree'}
                             					],
                             	layout: 'fit',
                             title: '图层导航',

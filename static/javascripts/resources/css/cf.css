@@ -33,3 +33,22 @@
     text-align: center;
     height: 60px;
 }
+ #loading{
+        height:auto;
+        position:absolute;
+        left:45%;
+        top:40%;
+        padding:2px;
+        z-index:20001;
+}
+ #loading a {
+        color:#225588;
+}
+ #loading .loading-indicator{
+        background:white;
+        color:#444;
+        font:bold 13px Helvetica, Arial, sans-serif;
+        height:auto;
+        margin:0;
+        padding:10px;
+ }

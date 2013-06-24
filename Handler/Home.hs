@@ -17,7 +17,7 @@ getHomeR = do
         handlerName = "getHomeR" :: Text
     defaultLayout $ do
         aDomId <- newIdent
-        setTitle "Welcome To Yesod!"
+        setTitle "Yesod Map!"
         addStylesheetRemote   "http://localhost/ext-4.2.1/resources/css/ext-all.css"
         addStylesheetRemote   "http://localhost/OpenLayers-2.13/theme/default/style.css"
         addStylesheet $ StaticR javascripts_resources_css_cf_css
@@ -38,7 +38,7 @@ postHomeR = do
 
     defaultLayout $ do
         aDomId <- newIdent
-        setTitle "Welcome To Yesod!"
+        setTitle "Yesod Map"
         $(widgetFile "homepage")
 
 sampleForm :: Form (FileInfo, Text)

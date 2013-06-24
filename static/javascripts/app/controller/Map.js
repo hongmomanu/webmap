@@ -15,7 +15,18 @@ Ext.define('CF.controller.Map', {
 
     init: function() {
         var me = this;
+        
+        var hideMask = function () {
+            Ext.get('loading').remove();
+            Ext.fly('loading-mask').animate({
+            opacity:0,
+            remove:true,
+            callback: firebugWarning
+            });
+        };
 
+        Ext.defer(hideMask, 250);
+        
         me.getSummitsStore().on({
             scope: me,
             load : me.onSummitsStoreLoad
