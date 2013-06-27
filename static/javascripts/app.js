@@ -22,7 +22,7 @@ Ext.application({
     name: 'CF',
     appFolder: 'static/javascripts/app',
     controllers: [
-        'Map'
+        'Map' ,'Navigation'
     ],
     autoCreateViewport: true
 });
