@@ -5,8 +5,8 @@
 Ext.define('CF.controller.Map', {
     extend: 'Ext.app.Controller',
 
-    models: ['Summit','Mission','Manager','MapTree'],
-    stores: ['Summits','Missions','Managers','MapTrees','MapServers','MapserverTrees'],
+    models: ['Summit'],//,'Mission','Manager','MapTree'
+    stores: ['Summits'],//,'Missions','Managers','MapTrees','MapServers','MapserverTrees'
 
     refs: [
         {ref: 'summitChart', selector: 'summitchart'},
@@ -37,36 +37,9 @@ Ext.define('CF.controller.Map', {
         this.control({
             'cf_mappanel': {
                 'beforerender': this.onMapPanelBeforeRender
-            },
-            'missiongrid':{
-                itemclick: this.showContent
-            },
-            'managergrid':{
-                itemclick: this.showContent
             }
         }, this);
     },
-
-    showContent: function(grid, record) {
-        console.log('Double clicked on ' + record.get('label'));
-        var label=record.get('label');
-	var widgetname=record.get('widget');   
-        var tabs=Ext.getCmp('mainContent-panel');
-        if(tabs.getComponent('tab'+label)){
-            tabs.getComponent('tab'+label).show();
-        }else{
-            tabs.add({
-                closable: true,
-                id: 'tab'+label,
-		xtype: widgetname,
-		autoScroll: true,
-                iconCls: 'tabs',
-                title: label
-            }).show();
-        }
-
-
-    } ,
 
     onMapPanelBeforeRender: function(mapPanel, options) {
         var me = this;
