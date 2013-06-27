@@ -36,7 +36,7 @@ Ext.define('CF.controller.Navigation', {
     },
 
     showContent: function(grid, record) {
-        console.log('Double clicked on ' + record.get('label'));
+        //console.log('Double clicked on ' + record.get('label'));
         var label=record.get('label');
         var widgetname=record.get('widget');
         var tabs=Ext.getCmp('mainContent-panel');
