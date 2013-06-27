@@ -18,13 +18,16 @@ getHomeR = do
     defaultLayout $ do
         aDomId <- newIdent
         setTitle "Yesod Map!"
-        addStylesheetRemote   "http://localhost/ext-4.2.1/resources/css/ext-all.css"
+        --addStylesheetRemote   "http://localhost/ext-4.2.1/resources/css/ext-all.css"
         addStylesheetRemote   "http://localhost/OpenLayers-2.13/theme/default/style.css"
         addStylesheet $ StaticR javascripts_resources_css_cf_css
         addScriptRemote   "http://localhost/OpenLayers-2.13/OpenLayers.js"
-        addScriptRemote   "http://localhost/ext-4.2.1/ext-debug-w-comments.js"
+        --addScriptRemote   "http://localhost/ext-4.2.1/ext-debug-w-comments.js"
+        addScriptRemote   "http://localhost/ext-4.2.1/examples/shared/include-ext.js"
+        addScriptRemote   "http://localhost/ext-4.2.1/examples/shared/options-toolbar.js"
         addScript $ StaticR javascripts_openlayersTiandi_js
         addScript $ StaticR  javascripts_app_js
+        addScript $ StaticR javascripts_commonfun_js
 
         $(widgetFile "homepage")
 

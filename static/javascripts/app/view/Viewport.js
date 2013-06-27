@@ -5,13 +5,15 @@
 Ext.define('CF.view.Viewport', {
     extend: 'Ext.Viewport',
     layout: 'fit',
-
     requires: [
         'Ext.layout.container.Border',
         'Ext.layout.container.Accordion',
         'Ext.tab.*',
         'Ext.resizer.Splitter',
         'CF.view.Header',
+					'CF.view.cachePanel',
+					'CF.view.testPanel',
+        'CF.view.config.servertypesPanel',
         'CF.view.Map',
         'CF.view.summit.Chart',
         'CF.view.navigation.missionGrid',
@@ -33,6 +35,17 @@ Ext.define('CF.view.Viewport', {
                 ],
                 items: [
                     {
+            		region: "center",
+            		xtype: 'tabpanel',
+            		tabBar: {
+               			 hidden: true
+            		},
+                        items: [
+                	{
+                	
+                		layout: "border",
+               			items: [
+                    {
                         region: 'west',
                         id: 'west-panel', // see Ext.getCmp() below
                         title: '导航栏',
@@ -41,6 +54,7 @@ Ext.define('CF.view.Viewport', {
                         style: {
                              border: 'none'
                         },
+			
                         minWidth: 175,
                         maxWidth: 400,
                         collapsible: true,
@@ -86,6 +100,7 @@ Ext.define('CF.view.Viewport', {
                     Ext.create('Ext.tab.Panel', {
                         region: 'center', // a center region is ALWAYS required for border layout
                         deferredRender: false,
+			layout:'border',
                         id: 'mainContent-panel',
                         activeTab: 0,     // first tab initially active
                         items: [
@@ -93,10 +108,25 @@ Ext.define('CF.view.Viewport', {
                                 xtype: 'cf_mappanel',
                                 title: '地图浏览',
                                 autoScroll: true
-                            }]
-                    })]
+                            },
+			    {
+			    	xtype:'panel',
+				hidden:true,
+				items:
+				[
+					{xtype:'testpanel'}
+				],
+				title:'muhaha'
+					
+			    }
+			    
+				    ]
+                   })
+		   ]
+		   }
+		   ]
             }]
-        });
+        }]});
 
         me.callParent(arguments);
     }

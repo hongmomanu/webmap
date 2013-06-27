@@ -10,7 +10,7 @@ Ext.define('CF.store.Managers', {
     extend: 'Ext.data.Store',
     model: 'CF.model.Manager',
     data: [
-        {label: '地图设置'},
+        {label: '地图设置',widget:'servertypespanel'},
         {label: '参数设置'}
     ]
 });

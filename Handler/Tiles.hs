@@ -18,13 +18,13 @@ getTilesR =do
     let paramList=Td.tilesUlrFilter x_param y_param z_param layerId
 -- 判断文件是否存在    
     
-    let gncDir="/home/jack/data/"
-    let fileName="gnc/1"++"/"++(T.unpack (paramList  !! 2 )) ++"/"++ (T.unpack (paramList  !! 0 ))++"/"++(T.unpack (paramList  !! 1 ))++".png"
-    let filePath=gncDir ++ fileName
-    result <- liftIO $ doesFileExist filePath
-    let url="http://localhost/gnc/1"++"/"++(T.unpack (paramList  !! 2 )) ++"/"++ (T.unpack (paramList  !! 0 ))++"/"++(T.unpack (paramList  !! 1 ))++".png"
-    if result then redirect url else $(logDebug) (T.pack "go on")
-    $(logDebug) (T.pack "get some thing new")
+    --let gncDir="/home/jack/data/"
+    --let fileName="gnc/1"++"/"++(T.unpack (paramList  !! 2 )) ++"/"++ (T.unpack (paramList  !! 0 ))++"/"++(T.unpack (paramList  !! 1 ))++".png"
+    --let filePath=gncDir ++ fileName
+    --result <- liftIO $ doesFileExist filePath
+    --let url="http://localhost/gnc/1"++"/"++(T.unpack (paramList  !! 2 )) ++"/"++ (T.unpack (paramList  !! 0 ))++"/"++(T.unpack (paramList  !! 1 ))++".png"
+    --if result then redirect url else $(logDebug) (T.pack "go on")
+    -- $(logDebug) (T.pack "get some thing new")
     mapcaches <-  runDB $ selectFirst [MapcacheX ==. (read (T.unpack (paramList  !! 0 ))),
                          MapcacheY ==. (read (T.unpack (paramList  !! 1 ))),
                          MapcacheZ ==. (read (T.unpack (paramList  !! 2 ))),

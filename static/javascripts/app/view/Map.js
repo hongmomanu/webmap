@@ -12,6 +12,9 @@ Ext.define('CF.view.Map', {
         'GeoExt.Action',
         'CF.view.help.Action'
     ],
+   style: {
+            border: 'none'
+    },	
     border: 'false',
     layout: 'fit',
     region: 'west',

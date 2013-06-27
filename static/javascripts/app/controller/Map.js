@@ -5,8 +5,8 @@
 Ext.define('CF.controller.Map', {
     extend: 'Ext.app.Controller',
 
-    models: ['Summit','Mission','Manager'],
-    stores: ['Summits','Missions','Managers'],
+    models: ['Summit','Mission','Manager','MapTree'],
+    stores: ['Summits','Missions','Managers','MapTrees','MapServers','MapserverTrees'],
 
     refs: [
         {ref: 'summitChart', selector: 'summitchart'},
@@ -15,15 +15,17 @@ Ext.define('CF.controller.Map', {
 
     init: function() {
         var me = this;
-        
-        var hideMask = function () {
-            Ext.get('loading').remove();
-            Ext.fly('loading-mask').animate({
-            opacity:0,
-            remove:true,
-            callback: firebugWarning
-            });
-        };
+
+					 var hideMask = function () {
+							Ext.get('loading').remove();
+							Ext.fly('loading-mask').animate({
+							opacity:0,
+							remove:true,
+							callback: function(){}
+						});
+					};
+					
+					removejscssfile("bootstrap.css","css");
 
         Ext.defer(hideMask, 250);
         
@@ -48,15 +50,16 @@ Ext.define('CF.controller.Map', {
     showContent: function(grid, record) {
         console.log('Double clicked on ' + record.get('label'));
         var label=record.get('label');
+	var widgetname=record.get('widget');   
         var tabs=Ext.getCmp('mainContent-panel');
         if(tabs.getComponent('tab'+label)){
             tabs.getComponent('tab'+label).show();
         }else{
             tabs.add({
                 closable: true,
-
                 id: 'tab'+label,
-                html: 'Tab Body ' + label+ '<br/><br/>',
+		xtype: widgetname,
+		autoScroll: true,
                 iconCls: 'tabs',
                 title: label
             }).show();

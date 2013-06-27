@@ -14,6 +14,7 @@ import Settings.Development (development)
 import qualified Database.Persist
 import Database.Persist.Sql (SqlPersistT)
 import Settings.StaticFiles
+import Database.Persist.MongoDB hiding (master)
 import Settings (widgetFile, Extra (..))
 import Model
 import Text.Jasmine (minifym)
@@ -72,6 +73,7 @@ instance Yesod App where
         (120 * 60) -- 120 minutes
         "config/client_session_key.aes"
 
+        
     defaultLayout widget = do
         master <- getYesod
         mmsg <- getMessage
@@ -88,7 +90,7 @@ instance Yesod App where
                 , css_bootstrap_css
                 ])
             $(widgetFile "default-layout")
-        hamletToRepHtml $(hamletFile "templates/default-layout-wrapper.hamlet")
+        hamletToRepHtml $(hamletFile "templates/default-layout-wrapper.hamlet")  
 
     -- This is done to provide an optimization for serving static files from
     -- a separate domain. Please see the staticRoot setting in Settings.hs
@@ -123,10 +125,8 @@ instance Yesod App where
 
 -- How to run database actions.
 instance YesodPersist App where
-    type YesodPersistBackend App = SqlPersistT
+    type YesodPersistBackend App = Action
     runDB = defaultRunDB persistConfig connPool
-instance YesodPersistRunner App where
-    getDBRunner = defaultGetDBRunner connPool
 
 instance YesodAuth App where
     type AuthId App = UserId

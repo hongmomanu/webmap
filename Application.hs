@@ -64,17 +64,12 @@ makeFoundation :: AppConfig DefaultEnv Extra -> IO App
 makeFoundation conf = do
     manager <- newManager def
     s <- staticSite
-    dbconf <- withYamlEnvironment "config/sqlite.yml" (appEnv conf)
+    dbconf <- withYamlEnvironment "config/mongoDB.yml" (appEnv conf)
               Database.Persist.loadConfig >>=
               Database.Persist.applyEnv
     p <- Database.Persist.createPoolConfig (dbconf :: Settings.PersistConf)
     logger <- mkLogger True stdout
     let foundation = App conf s p manager dbconf logger
-
-    -- Perform database migration using our application's logging settings.
-    runLoggingT
-        (Database.Persist.runPool dbconf (runMigration migrateAll) p)
-        (messageLoggerSource foundation logger)
 
     return foundation
 

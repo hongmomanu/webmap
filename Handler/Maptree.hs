@@ -17,13 +17,9 @@ getMaptreeR :: Handler Value
 getMaptreeR =do
     mapservers <- runDB $ selectList [] [Desc MapserverId]
     maptypes <- sequence [(runDB $ selectList [MaptypeMapowerid ==. mapserverId] [Desc MaptypeId]) | Entity mapserverId mapserver<- (mapservers ::[Entity  Mapserver])]
-
-    --sequence [liftIO $ print (mapserverMapower mapserver) >> print mapserverId |Entity mapserverId mapserver<- (mapservers ::[Entity  Mapserver]) ]
-    let maplist=[object ["text" .= (mapserverOwername mapserver),
+    let maplist=[object ["text" .= (mapserverOwername mapserver), "expanded" .=True,  
             "children" .=array [object ["text" .= (maptypeMapname maptype),"leaf" .= True]| Entity maptypeId maptype <- (maptypes !! index) :: [Entity  Maptype]]
             ] | ((Entity mapserverId mapserver) ,index)<- zip (mapservers ::[Entity  Mapserver]) [0..]]
-
-    --return $ object ["text" .= ("天地图"::Text),"children" .= array [object ["text" .= ("天地图全国矢量底图" :: Text)],object ["text" .= ("天地图全国矢量图标" :: Text)]] ]
     return $ array maplist
 
 sqlHandle maptypeId=selectList [] [Desc MaptypeId]

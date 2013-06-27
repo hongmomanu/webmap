@@ -19,8 +19,6 @@ import Data.Time
 import Data.ByteString.Lazy as LBS
 import System.Random
 import Database.Persist
-import Database.Persist.Sqlite
-import Database.Persist.TH
 import System.Directory
 
 import qualified Data.ByteString.Char8 as Bys
@@ -81,14 +79,10 @@ getMapTilesFromUrl x y z =do
 
     uptime <- liftIO $ getCurrentTime
     img  <- liftIO $  safeQueryEasy imgUrl
-    mapcacheId <-  runDB $ test  (1 :: Data.Int64) uptime x  y  z  False    (Bys.pack img) (1 :: Data.Int64)
+    mapcacheId <-  runDB $ insert $ Mapcache (1 :: Data.Int64) uptime x  y  z  True    (Bys.pack img) (1 :: Data.Int64)
     $(logDebug) (T.pack imgUrl)
 
 
-test taskid tm x y z issuc img layerid =withSqliteConn ":memory:" $  runSqlConn $ do
-    runMigration migrateAll
-
-    insert $ Mapcache taskid tm x y z issuc img layerid
     
 
 tilesUlrFilter x_param y_param z_param layerid_param =

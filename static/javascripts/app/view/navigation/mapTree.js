@@ -19,11 +19,13 @@ Ext.define('CF.view.navigation.mapTree', {
 
     //height: 400,
     //width: 350,
-    title: 'Files',
+    //title: 'Files',
+    rootVisible: false,
+    border: false,
     useArrows: true,
     initComponent: function () {
         Ext.apply(this, {
-            store: new Ext.data.TreeStore({
+           /** store: new Ext.data.TreeStore({
                 proxy: {
                     type: 'ajax',
                     url: 'maptree'
@@ -40,7 +42,8 @@ Ext.define('CF.view.navigation.mapTree', {
                         direction: 'ASC'
                     }
                 ]
-            }),
+            }),**/
+	    store:'MapTrees',
             viewConfig: {
                 plugins: {
                     ptype: 'treeviewdragdrop',

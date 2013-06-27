@@ -13,7 +13,7 @@ Ext.define('CF.store.Missions', {
     extend: 'Ext.data.Store',
     model: 'CF.model.Mission',
     data: [
-        {label: '任务状态'},
-        {label: '抓取切片'}
+        {label: '任务状态',widget:'missiongridpanel'},
+        {label: '抓取切片',widget:'cachepanel'}
     ]
 });
