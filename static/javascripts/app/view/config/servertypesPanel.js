@@ -11,7 +11,7 @@ Ext.define('CF.view.config.servertypesPanel' ,{
     extend: 'Ext.tree.Panel',
     alias : 'widget.servertypespanel',
     requires: [
-	'Ext.form.*'
+        'CF.view.config.addNewMapWin'
     ],
     initComponent: function() {
         Ext.apply(this, {
@@ -21,7 +21,6 @@ Ext.define('CF.view.config.servertypesPanel' ,{
         useArrows: true,
         rootVisible: false,
         store: 'MapserverTrees',
-        
         multiSelect: false,
         columns: [
             {
@@ -48,7 +47,7 @@ Ext.define('CF.view.config.servertypesPanel' ,{
             {
            text: '新增地图',
            handler: function () {
-               
+                Ext.widget('addnewmapwin').show();
                } 
             },
              '->',
