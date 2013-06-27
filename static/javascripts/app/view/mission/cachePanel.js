@@ -7,7 +7,7 @@
  */
 
 
-Ext.define('CF.view.cachePanel' ,{
+Ext.define('CF.view.mission.cachePanel' ,{
     extend: 'Ext.form.Panel',
     alias : 'widget.cachepanel',
     //border: true,	

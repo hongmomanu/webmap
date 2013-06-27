@@ -12,7 +12,7 @@ Ext.define('CF.view.navigation.missionGrid' ,{
     alias : 'widget.missiongrid',
     cls:'navigation-grid',
     requires: [
-
+        'CF.view.mission.cachePanel'
     ],
     initComponent: function() {
         Ext.apply(this, {

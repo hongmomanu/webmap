@@ -11,8 +11,6 @@ Ext.define('CF.view.Viewport', {
         'Ext.tab.*',
         'Ext.resizer.Splitter',
         'CF.view.Header',
-		'CF.view.cachePanel',
-		'CF.view.testPanel',
         'CF.view.config.servertypesPanel',
         'CF.view.Map',
         'CF.view.summit.Chart',
@@ -100,7 +98,7 @@ Ext.define('CF.view.Viewport', {
                     Ext.create('Ext.tab.Panel', {
                         region: 'center', // a center region is ALWAYS required for border layout
                         deferredRender: false,
-			layout:'border',
+			            layout:'border',
                         id: 'mainContent-panel',
                         activeTab: 0,     // first tab initially active
                         items: [
@@ -108,17 +106,8 @@ Ext.define('CF.view.Viewport', {
                                 xtype: 'cf_mappanel',
                                 title: '地图浏览',
                                 autoScroll: true
-                            },
-			    {
-			    	xtype:'panel',
-				hidden:true,
-				items:
-				[
-					{xtype:'testpanel'}
-				],
-				title:'muhaha'
-					
-			    }
+                            }
+
 			    
 				    ]
                    })
