@@ -13,7 +13,6 @@ Ext.define('CF.view.config.servertypesPanel' ,{
     requires: [
         'CF.view.config.addNewMapWin'
     ],
-    mapserverWin:null,
     initComponent: function() {
         Ext.apply(this, {
         title: '服务资源管理',
@@ -47,10 +46,8 @@ Ext.define('CF.view.config.servertypesPanel' ,{
          buttons: [
             {
            text: '新增地图',
-           handler: function () {
-               if(!this.mapserverWin)this.mapserverWin=Ext.widget('addnewmapwin');
-               this.mapserverWin.show();
-               } 
+           action:'add'
+
             },
              '->',
              {

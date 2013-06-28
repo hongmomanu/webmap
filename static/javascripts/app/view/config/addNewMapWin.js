@@ -99,35 +99,8 @@ Ext.define('CF.view.config.addNewMapWin' ,{
                     } ,
                     {
                         text: '添加',
-                        handler: function () {
-                            var form = this.up('form').getForm();
-                            if (form.isValid()) {
-                                //Ext.MessageBox.alert('Submitted Values', form.getValues(true));
+                        action: 'add'
 
-                                form.submit({
-                                    waitTitle: '提示', //标题
-                                    waitMsg: '正在保存数据请稍后...', //提示信息
-                                    url: 'mapinfotodb',
-
-                                    method: "POST",
-                                    params: {
-                                        type: 'add',
-                                        keyid: 0,
-                                        treelevel: -1
-                                    },
-                                    success: function (form, action) {
-
-                                        Ext.Msg.alertmaplayer_win = null;
-
-                                    },
-                                    failure: function (form, action) {
-                                        Ext.Msg.alert('失败!', "添加数据失败!");
-
-                                    }
-                                });
-
-                            }
-                        }
                     }
                 ],
                 border: false

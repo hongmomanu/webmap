@@ -11,7 +11,7 @@ Ext.define('CF.view.Viewport', {
         'Ext.tab.*',
         'Ext.resizer.Splitter',
         'CF.view.Header',
-        'CF.view.config.servertypesPanel',
+
         'CF.view.Map',
         'CF.view.summit.Chart',
         'CF.view.navigation.missionGrid',
