@@ -12,6 +12,15 @@ Ext.define('CF.controller.Map', {
         {ref: 'summitChart', selector: 'summitchart'},
         {ref: 'summitGrid', selector: 'summitgrid'}
     ],
+    views: [
+        // 'user.List'
+        'Header',
+
+        'Map',
+        'summit.Chart',
+
+        'summit.Grid'
+    ],
 
     init: function() {
         var me = this;

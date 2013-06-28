@@ -21,6 +21,12 @@ Ext.define('CF.controller.Navigation', {
         {ref: 'summitChart', selector: 'summitchart'},
         {ref: 'summitGrid', selector: 'summitgrid'}
     ],*/
+    views: [
+        // 'user.List'
+        'navigation.missionGrid',
+        'navigation.managerGrid',
+        'navigation.mapTree'
+    ],
 
     init: function() {
         var me = this;

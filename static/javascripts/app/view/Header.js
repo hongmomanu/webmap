@@ -10,8 +10,8 @@ Ext.define('CF.view.Header', {
 
     initComponent: function() {
         Ext.applyIf(this, {
-            html: 'MVC simple application example called CF ' +
-                '(Cartography Framework)'
+            html: '地图服务系统 ' +
+                '(MVC  Framework)'
         });
 
         this.callParent(arguments);

@@ -18,7 +18,7 @@ Ext.define('CF.controller.Config', {
     stores: [],
     views: [
        // 'user.List'
-        'config.servertypesPanel',
+        'config.servertypesPanel'
     ],
 
     refs: [

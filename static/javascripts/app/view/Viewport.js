@@ -9,15 +9,8 @@ Ext.define('CF.view.Viewport', {
         'Ext.layout.container.Border',
         'Ext.layout.container.Accordion',
         'Ext.tab.*',
-        'Ext.resizer.Splitter',
-        'CF.view.Header',
+        'Ext.resizer.Splitter'
 
-        'CF.view.Map',
-        'CF.view.summit.Chart',
-        'CF.view.navigation.missionGrid',
-        'CF.view.navigation.managerGrid',
-        'CF.view.navigation.mapTree',
-        'CF.view.summit.Grid'
     ],
 
     initComponent: function() {
