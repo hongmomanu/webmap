@@ -12,7 +12,10 @@ Ext.define('CF.model.Manager', {
             name: 'label',
             type:'string'
         },{
-            name: 'widget',
+            name: 'value',
+            type:'string'
+        },{
+            name: 'type',
             type:'string'
         }
     ]

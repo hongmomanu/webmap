@@ -15,7 +15,10 @@ Ext.define('CF.model.Mission', {
             name: 'label',
             type:'string'
         },{
-            name: 'widget',
+            name: 'value',
+            type:'string'
+        },{
+            name: 'type',
             type:'string'
         }
     ]

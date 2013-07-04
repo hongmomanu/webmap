@@ -12,3 +12,5 @@
 /image ImageR GET
 /tiles TilesR GET
 /maptree MaptreeR GET
+/mapinfotodb MaptodoR POST
+/test TestR GET

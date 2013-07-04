@@ -13,7 +13,7 @@ getTilesR =do
     y_param <- lookupGetParam "Y"
     z_param <- lookupGetParam "L"
     layerId <- lookupGetParam "layerid"
-    liftIO $ Td.writeTileCache 1 2 3 4 
+    --liftIO $ Td.writeTileCache 1 2 3 4 
     
     let paramList=Td.tilesUlrFilter x_param y_param z_param layerId
 -- 判断文件是否存在    

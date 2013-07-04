@@ -84,7 +84,7 @@ getMapTilesFromUrl x y z =do
 
 
     
-
+--访问瓦片参数过滤
 tilesUlrFilter x_param y_param z_param layerid_param =
     let x =case x_param of
                 Just "" -> error "x 无值"
@@ -102,8 +102,47 @@ tilesUlrFilter x_param y_param z_param layerid_param =
                 Just "" -> error "layerid 无值"
                 Just info -> info
                 Nothing -> error "no layerid param"
+        
 
     in [x,y,z,layerid]
+--服务设置参数过滤
+
+maptodoUrlFilter typeParam treelevel keyid mapower_param owername_param projection_param spatialreference_param maptype_param=
+    let method=case typeParam of
+                Just "" -> error "type 无值"
+                Just info -> info
+                Nothing -> error "no type param"
+        tree=case treelevel of
+                Just "" -> error "treelevel 无值"
+                Just info -> info
+                Nothing -> error "no treelevel param"
+        key=case keyid of
+                Just "" -> error "keyid 无值"
+                Just info -> info
+                Nothing -> error "no keyid param" 
+        mapower =case mapower_param of 
+                Just "" ->""
+                Just info -> info
+                Nothing -> ""
+        owername =case owername_param of 
+                Just "" ->""
+                Just info -> info
+                Nothing -> ""
+        projection =case projection_param of 
+                Just "" ->""
+                Just info -> info
+                Nothing -> ""
+        spatialreference=case spatialreference_param of 
+                Just "" ->""
+                Just info -> info
+                Nothing -> ""     
+    
+        maptype =case maptype_param of 
+                Just "" ->""
+                Just info -> info
+                Nothing -> ""                
+    in [method,tree,key,mapower,owername,projection,spatialreference,maptype]               
+              
 --参数过滤
 getImgUlrFilter z_param maxx_param maxy_param minx_param miny_param layerid_param =
     let z     = case z_param of

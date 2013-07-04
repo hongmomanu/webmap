@@ -41,8 +41,72 @@ Ext.define('CF.controller.Config', {
             'servertypespanel button[action=add]':{
                 click:this.addMapWin
                 //itemclick: this.showContent
+            }, 
+            'servertypespanel':{
+                itemcontextmenu: this.showMenu
+            },
+            'mapmenu > menuitem' : {
+                click : this.addLayerWin
             }
+                
         }, this);
+    },
+    showMenu:function (panelView, record, item, index, e, eOpts){
+     var me = this;
+     e.preventDefault();  
+     e.stopEvent(); 
+     var menu=null;
+     if(record.data.depth==1){
+        menu=Ext.widget('mapmenu');
+					 
+					 
+     
+     }else if (record.data.depth==2){
+					 menu = new Ext.menu.Menu({     
+						      items:[{     
+						          text: '新增图层数据'
+						      },{     
+						          text: '删除图层'    
+						      }]     
+						});
+					 
+     
+     }else if (record.data.depth==2){
+        menu= new Ext.menu.Menu({     
+						      items:[{     
+						          text: '删除图层数据'    
+						      }]     
+						});
+     
+     
+     
+     }
+             
+        
+        menu.showAt(e.getXY()) ; 
+    },
+    addLayerWin:function(item, e, eOpts){
+    		if(item.text==='删除地图'){
+    		var me =this;
+    		  Ext.Msg.show({
+          title:'确定要删除此地图?',
+          msg: '你正在试图删除选中地图的操作.你想继续么?',
+          buttons: Ext.Msg.YESNO,
+          fn:function(btn) {
+             console.log(btn);
+             me.delMap();
+    				 },
+          icon: Ext.Msg.QUESTION
+           });
+    		}else{
+    		  if(!this.maplayerWin)this.maplayerWin=Ext.widget('addnewlayerwin');
+        this.maplayerWin.show();
+    		}
+    						
+    },
+    delMap:function(){
+          console.log("hello delMap");
+          console.log(this.getServertypesPanel().getSelectionModel().getLastSelected());
     },
     addMapWin:function(button){
 

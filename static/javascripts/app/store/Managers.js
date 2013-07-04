@@ -10,7 +10,8 @@ Ext.define('CF.store.Managers', {
     extend: 'Ext.data.Store',
     model: 'CF.model.Manager',
     data: [
-        {label: '地图设置',widget:'servertypespanel'},
-        {label: '参数设置'}
+        {label: '地图设置',value:'servertypespanel',type:'widget'},
+        {label: '参数设置',type:'widget',value:'configpanel'} ,
+        {label: 'GeoServer',type:'url',value:'http://192.168.2.141:8082/geoserver'}
     ]
 });

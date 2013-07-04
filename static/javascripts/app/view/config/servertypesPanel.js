@@ -11,7 +11,9 @@ Ext.define('CF.view.config.servertypesPanel' ,{
     extend: 'Ext.tree.Panel',
     alias : 'widget.servertypespanel',
     requires: [
-        'CF.view.config.addNewMapWin'
+        'CF.view.config.addNewMapWin',
+        'CF.view.config.addNewLayerWin',
+        'CF.view.config.mapMenu'
     ],
     initComponent: function() {
         Ext.apply(this, {

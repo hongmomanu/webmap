@@ -27,6 +27,8 @@ library
                      Handler.Image
                      Handler.Tiles
                      Handler.Maptree
+                     Handler.Maptodo
+                     Handler.Test
                      Bussiness.Tianditu
 
 
@@ -72,6 +74,8 @@ library
                  , random
                  , HTTP
                  , http-types
+                 , HDBC-odbc
+                 , HDBC
                  , hamlet                        >= 1.1        && < 1.2
                  , shakespeare-css               >= 1.0        && < 1.1
                  , shakespeare-js                >= 1.0.2      && < 1.2
