@@ -14,22 +14,28 @@
 Ext.define('CF.controller.Config', {
     extend: 'Ext.app.Controller',
 
-    models: [],
-    stores: [],
+    models: ['SpaceTable'],
+    stores: ['SpaceTables'],
+    
     views: [
        // 'user.List'
-        'config.servertypesPanel'
+        'config.servertypesPanel',
+        'config.doorPanel'
     ],
 
     refs: [
         {
             ref: 'servertypesPanel',
             selector: 'servertypespanel'
+        },
+        {
+            ref: 'doorPanel',
+            selector: 'doorpanel'
         }
         /*{ref: 'summitChart', selector: 'summitchart'},
         {ref: 'summitGrid', selector: 'summitgrid'}*/
     ],
-
+     //初始化
     init: function() {
         var me = this;
         //testobj=this.getSchedulerSchedulerView();
@@ -38,8 +44,16 @@ Ext.define('CF.controller.Config', {
             'addnewmapwin button[action=add]': {
                 click: this.addMap
             },
+             'addnewlayerwin button[action=add]':{
+                click:this.addLayer
+                //itemclick: this.showContent
+            }, 
             'servertypespanel button[action=add]':{
                 click:this.addMapWin
+                //itemclick: this.showContent
+            }, 
+            'doorpanel button[action=connect]':{
+                click:this.connectDb
                 //itemclick: this.showContent
             }, 
             'servertypespanel':{
@@ -115,34 +129,105 @@ Ext.define('CF.controller.Config', {
             //testobj=this.getServertypesPanel();
 
     },
-    addMap:function(button){
-        var form = button.up('form').getForm();
+    connectDb:function(button){
+    			//console.log("connect begin");
+    			var me=this;
+    			var successFunc=function (form, action) {
+    							var  result=Ext.JSON.decode(action.response.responseText)
+								  Ext.Msg.alert("提示信息",result.msg);
+								  
+								  testobj=me.getDoorPanel();
+								  
+									
+									
+									Ext.regModel ('Table', {
+										fields:[//define the model field
+												{name:'text', type:'string'}
+										]
+									});
+									var table_comb=me.getDoorPanel().getForm().findField("prop_table");
+									table_comb.removeAll();
+									Ext.each(result.tables,function(a){
+										var table = Ext.ModelMgr.create({  
+												text : a	
+										}, 'Table');  
+										
+										table_comb.store.add(table);
+									
+									}
+									);
+									
+									
+								  
+								 
+								  
+								  
+
+          };
+         var failFunc=function (form, action) {
+        // alert(Ext.JSON.decode(action.response.responseText).msg);
+               Ext.Msg.alert("提示信息",Ext.JSON.decode(action.response.responseText).msg);
+
+          }; 
+    			this.formSubmit(button,{},'checkconnect',successFunc,failFunc);
+    
+    },
+    addLayer:function(button){
+    		var params={
+    			type: 'add',
+         keyid: 0,
+         treelevel: 0
+    		
+    		};
+    		var successFunc=function (form, action) {
+
+              console.log(form);
+              console.log(action);
+
+          };
+        var failFunc=function (form, action) {
+        
+         };
+    		this.formSubmit(button,params,'mapinfotodb',successFunc,failFunc);
+    
+    },
+    formSubmit:function (button,params,url,sucFunc,failFunc){
+    		var form = button.up('form').getForm();
         if (form.isValid()) {
             //Ext.MessageBox.alert('Submitted Values', form.getValues(true));
 
             form.submit({
                 waitTitle: '提示', //标题
                 waitMsg: '正在保存数据请稍后...', //提示信息
-                url: 'mapinfotodb',
+                url: url,
 
                 method: "POST",
-                params: {
-                    type: 'add',
-                    keyid: 0,
-                    treelevel: -1
-                },
-                success: function (form, action) {
-
-                    Ext.Msg.alertmaplayer_win = null;
-
-                },
-                failure: function (form, action) {
-                    Ext.Msg.alert('失败!', "添加数据失败!");
-
-                }
+                params: params,
+                success: sucFunc,
+                failure: failFunc
             });
 
         }
+
+    
+    },
+    addMap:function(button){
+    		var params ={
+                    type: 'add',
+                    keyid: 0,
+                    treelevel: -1
+                };
+                
+       var successFunc=function (form, action) {
+
+              console.log(form);
+              console.log(action);
+
+        };    
+        var failFunc=function (form, action) {
+        
+         };   
+       this.formSubmit(button,params,'mapinfotodb',successFunc,failFunc);        
 
     },
 

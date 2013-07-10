@@ -10,6 +10,7 @@
 /**
  * Map controller
  * Used to manage map layers and showing their related views
+ * 导航栏，显示各种信息
  */
 Ext.define('CF.controller.Navigation', {
     extend: 'Ext.app.Controller',

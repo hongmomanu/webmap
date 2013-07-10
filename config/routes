@@ -14,3 +14,4 @@
 /maptree MaptreeR GET
 /mapinfotodb MaptodoR POST
 /test TestR GET
+/checkconnect CheckConnectR POST

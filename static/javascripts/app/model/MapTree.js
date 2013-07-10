@@ -8,4 +8,4 @@ Ext.define('CF.model.MapTree', {
         { name: 'updatetime',type: 'string', mapping: 'updatetime' }
     ]
 
-})
+});

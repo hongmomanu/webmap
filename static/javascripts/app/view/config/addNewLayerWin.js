@@ -13,7 +13,7 @@ Ext.define('CF.view.config.addNewLayerWin' ,{
     ],
     initComponent: function() {
         Ext.apply(this, {
-            title: '新增地图',
+            title: '新增图层',
             height: 400,
             width: 500,
             closeAction : 'hide',
