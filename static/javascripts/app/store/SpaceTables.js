@@ -12,6 +12,7 @@
 Ext.define('CF.store.SpaceTables', {
     extend: 'Ext.data.Store',
     model: 'CF.model.SpaceTable',
+    alias : 'widget.spacetables',
     data: [
     ]
 });

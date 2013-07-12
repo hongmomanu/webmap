@@ -16,9 +16,9 @@ Ext.define('CF.controller.Config', {
 
     models: ['SpaceTable'],
     stores: ['SpaceTables'],
-    
+
     views: [
-       // 'user.List'
+        // 'user.List'
         'config.servertypesPanel',
         'config.doorPanel'
     ],
@@ -33,10 +33,10 @@ Ext.define('CF.controller.Config', {
             selector: 'doorpanel'
         }
         /*{ref: 'summitChart', selector: 'summitchart'},
-        {ref: 'summitGrid', selector: 'summitgrid'}*/
+         {ref: 'summitGrid', selector: 'summitgrid'}*/
     ],
-     //初始化
-    init: function() {
+    //初始化
+    init: function () {
         var me = this;
         //testobj=this.getSchedulerSchedulerView();
 
@@ -44,155 +44,177 @@ Ext.define('CF.controller.Config', {
             'addnewmapwin button[action=add]': {
                 click: this.addMap
             },
-             'addnewlayerwin button[action=add]':{
-                click:this.addLayer
+            'addnewlayerwin button[action=add]': {
+                click: this.addLayer
                 //itemclick: this.showContent
-            }, 
-            'servertypespanel button[action=add]':{
-                click:this.addMapWin
+            },
+            'servertypespanel button[action=add]': {
+                click: this.addMapWin
                 //itemclick: this.showContent
-            }, 
-            'doorpanel button[action=connect]':{
-                click:this.connectDb
+            },
+            'doorpanel button[action=connect]': {
+                click: this.connectDb
                 //itemclick: this.showContent
-            }, 
-            'servertypespanel':{
+            },
+            'doorpanel button[action=beginpattern]':{
+                click :this.patternDoorplate
+
+            },
+            'servertypespanel': {
                 itemcontextmenu: this.showMenu
             },
-            'mapmenu > menuitem' : {
-                click : this.addLayerWin
+            'mapmenu > menuitem': {
+                click: this.addLayerWin
             }
-                
+
         }, this);
     },
-    showMenu:function (panelView, record, item, index, e, eOpts){
-     var me = this;
-     e.preventDefault();  
-     e.stopEvent(); 
-     var menu=null;
-     if(record.data.depth==1){
-        menu=Ext.widget('mapmenu');
-					 
-					 
-     
-     }else if (record.data.depth==2){
-					 menu = new Ext.menu.Menu({     
-						      items:[{     
-						          text: '新增图层数据'
-						      },{     
-						          text: '删除图层'    
-						      }]     
-						});
-					 
-     
-     }else if (record.data.depth==2){
-        menu= new Ext.menu.Menu({     
-						      items:[{     
-						          text: '删除图层数据'    
-						      }]     
-						});
-     
-     
-     
-     }
-             
-        
-        menu.showAt(e.getXY()) ; 
-    },
-    addLayerWin:function(item, e, eOpts){
-    		if(item.text==='删除地图'){
-    		var me =this;
-    		  Ext.Msg.show({
-          title:'确定要删除此地图?',
-          msg: '你正在试图删除选中地图的操作.你想继续么?',
-          buttons: Ext.Msg.YESNO,
-          fn:function(btn) {
-             console.log(btn);
-             me.delMap();
-    				 },
-          icon: Ext.Msg.QUESTION
-           });
-    		}else{
-    		  if(!this.maplayerWin)this.maplayerWin=Ext.widget('addnewlayerwin');
-        this.maplayerWin.show();
-    		}
-    						
-    },
-    delMap:function(){
-          console.log("hello delMap");
-          console.log(this.getServertypesPanel().getSelectionModel().getLastSelected());
-    },
-    addMapWin:function(button){
+    showMenu: function (panelView, record, item, index, e, eOpts) {
+        var me = this;
+        e.preventDefault();
+        e.stopEvent();
+        var menu = null;
+        if (record.data.depth == 1) {
+            menu = Ext.widget('mapmenu');
 
-            if(!this.mapserverWin)this.mapserverWin=Ext.widget('addnewmapwin');
-            this.mapserverWin.show();
-            //testobj=this.getServertypesPanel();
+
+        } else if (record.data.depth == 2) {
+            menu = new Ext.menu.Menu({
+                items: [
+                    {
+                        text: '新增图层数据'
+                    },
+                    {
+                        text: '删除图层'
+                    }
+                ]
+            });
+
+
+        } else if (record.data.depth == 2) {
+            menu = new Ext.menu.Menu({
+                items: [
+                    {
+                        text: '删除图层数据'
+                    }
+                ]
+            });
+
+
+        }
+
+
+        menu.showAt(e.getXY());
+    },
+    addLayerWin: function (item, e, eOpts) {
+        if (item.text === '删除地图') {
+            var me = this;
+            Ext.Msg.show({
+                title: '确定要删除此地图?',
+                msg: '你正在试图删除选中地图的操作.你想继续么?',
+                buttons: Ext.Msg.YESNO,
+                fn: function (btn) {
+                    console.log(btn);
+                    me.delMap();
+                },
+                icon: Ext.Msg.QUESTION
+            });
+        } else {
+            if (!this.maplayerWin)this.maplayerWin = Ext.widget('addnewlayerwin');
+            this.maplayerWin.show();
+        }
 
     },
-    connectDb:function(button){
-    			//console.log("connect begin");
-    			var me=this;
-    			var successFunc=function (form, action) {
-    							var  result=Ext.JSON.decode(action.response.responseText)
-								  Ext.Msg.alert("提示信息",result.msg);
-								  
-								  testobj=me.getDoorPanel();
-								  
-									
-									
-									Ext.regModel ('Table', {
-										fields:[//define the model field
-												{name:'text', type:'string'}
-										]
-									});
-									var table_comb=me.getDoorPanel().getForm().findField("prop_table");
-									table_comb.removeAll();
-									Ext.each(result.tables,function(a){
-										var table = Ext.ModelMgr.create({  
-												text : a	
-										}, 'Table');  
-										
-										table_comb.store.add(table);
-									
-									}
-									);
-									
-									
-								  
-								 
-								  
-								  
-
-          };
-         var failFunc=function (form, action) {
-        // alert(Ext.JSON.decode(action.response.responseText).msg);
-               Ext.Msg.alert("提示信息",Ext.JSON.decode(action.response.responseText).msg);
-
-          }; 
-    			this.formSubmit(button,{},'checkconnect',successFunc,failFunc);
-    
+    delMap: function () {
+        //console.log("hello delMap");
+        //console.log(this.getServertypesPanel().getSelectionModel().getLastSelected());
     },
-    addLayer:function(button){
-    		var params={
-    			type: 'add',
-         keyid: 0,
-         treelevel: 0
-    		
-    		};
-    		var successFunc=function (form, action) {
+    addMapWin: function (button) {
 
-              console.log(form);
-              console.log(action);
+        if (!this.mapserverWin)this.mapserverWin = Ext.widget('addnewmapwin');
+        this.mapserverWin.show();
+        //testobj=this.getServertypesPanel();
 
-          };
-        var failFunc=function (form, action) {
-        
-         };
-    		this.formSubmit(button,params,'mapinfotodb',successFunc,failFunc);
-    
     },
-    formSubmit:function (button,params,url,sucFunc,failFunc){
-    		var form = button.up('form').getForm();
+    patternDoorplate:function(button){
+        Ext.Msg.alert("begin partten");
+
+        var me = this;
+        var successFunc = function (form, action) {
+            //var result = Ext.JSON.decode(action.response.responseText)
+            Ext.Msg.alert("提示信息", "ok");
+
+        };
+        var failFunc = function (form, action) {
+            // alert(Ext.JSON.decode(action.response.responseText).msg);
+            Ext.Msg.alert("提示信息", "hh");
+
+        };
+        this.formSubmit(button, {}, 'patterndoor', successFunc, failFunc);
+
+
+
+
+
+    },
+    connectDb: function (button) {
+        //console.log("connect begin");
+        var me = this;
+        var successFunc = function (form, action) {
+            var result = Ext.JSON.decode(action.response.responseText)
+            Ext.Msg.alert("提示信息", result.msg);
+
+            //testobj = me.getDoorPanel();
+
+
+            Ext.regModel('Table', {
+                fields: [//define the model field
+                    {name: 'text', type: 'string'}
+                ]
+            });
+            var table_comb = button.up('form').getForm().findField("proptable");
+            table_comb.store.removeAll();
+            Ext.each(result.tables, function (a) {
+                    var table = Ext.ModelMgr.create({
+                        text: a
+                    }, 'Table');
+
+                    table_comb.store.add(table);
+
+                }
+            );
+
+
+        };
+        var failFunc = function (form, action) {
+            // alert(Ext.JSON.decode(action.response.responseText).msg);
+            Ext.Msg.alert("提示信息", Ext.JSON.decode(action.response.responseText).msg);
+
+        };
+        this.formSubmit(button, {}, 'checkconnect', successFunc, failFunc);
+
+    },
+    addLayer: function (button) {
+        var params = {
+            type: 'add',
+            keyid: 0,
+            treelevel: 0
+
+        };
+        var successFunc = function (form, action) {
+
+            console.log(form);
+            console.log(action);
+
+        };
+        var failFunc = function (form, action) {
+
+        };
+        this.formSubmit(button, params, 'mapinfotodb', successFunc, failFunc);
+
+    },
+    formSubmit: function (button, params, url, sucFunc, failFunc) {
+        var form = button.up('form').getForm();
         if (form.isValid()) {
             //Ext.MessageBox.alert('Submitted Values', form.getValues(true));
 
@@ -209,29 +231,29 @@ Ext.define('CF.controller.Config', {
 
         }
 
-    
-    },
-    addMap:function(button){
-    		var params ={
-                    type: 'add',
-                    keyid: 0,
-                    treelevel: -1
-                };
-                
-       var successFunc=function (form, action) {
-
-              console.log(form);
-              console.log(action);
-
-        };    
-        var failFunc=function (form, action) {
-        
-         };   
-       this.formSubmit(button,params,'mapinfotodb',successFunc,failFunc);        
 
     },
+    addMap: function (button) {
+        var params = {
+            type: 'add',
+            keyid: 0,
+            treelevel: -1
+        };
 
-    onLaunch: function() {
+        var successFunc = function (form, action) {
+
+            console.log(form);
+            console.log(action);
+
+        };
+        var failFunc = function (form, action) {
+
+        };
+        this.formSubmit(button, params, 'mapinfotodb', successFunc, failFunc);
+
+    },
+
+    onLaunch: function () {
         var me = this;
 
         // for dev purpose
