@@ -30,7 +30,9 @@ library
                      Handler.Maptodo
                      Handler.Test
                      Handler.CheckConnect
+                     Handler.PatternDoor
                      Bussiness.Tianditu
+                     Bussiness.ConnPool
 
 
     if flag(dev) || flag(library-only)
