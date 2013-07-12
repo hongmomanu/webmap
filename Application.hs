@@ -13,9 +13,9 @@ import Yesod.Default.Main
 import Yesod.Default.Handlers
 import Network.Wai.Middleware.RequestLogger
 import qualified Database.Persist
-import Database.Persist.Sql (runMigration)
+--import Database.Persist.Sql (runMigration)
 import Network.HTTP.Conduit (newManager, def)
-import Control.Monad.Logger (runLoggingT)
+--import Control.Monad.Logger (runLoggingT)
 import System.IO (stdout)
 import System.Log.FastLogger (mkLogger)
 
@@ -28,11 +28,11 @@ import Handler.Blog
 import Handler.Article
 import Handler.Image
 import Handler.Tiles
-import Handler.Tiles
 import Handler.Maptree
 import Handler.Maptodo
 import Handler.Test
 import Handler.CheckConnect
+import Handler.PatternDoor
 
 
 -- This line actually creates our YesodDispatch instance. It is the second half
