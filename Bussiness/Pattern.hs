@@ -1,3 +1,4 @@
+{-# LANGUAGE ScopedTypeVariables #-}
 module Bussiness.Pattern
 where
 
@@ -5,15 +6,16 @@ import Import
 
 import Database.HDBC
 
-import qualified Data.Text as T
+import qualified Data.Text as T (unpack)
+import qualified Data.ByteString.Lazy as L (ByteString,empty)
 
-import Data.String.Unicode
+--import Data.String.Unicode
 --import Data.ByteString.UTF8 (fromString)
 --import qualified Data.ByteString.Char8 as Char8
-import qualified Codec.Text.IConv as IConv
+--import qualified Codec.Text.IConv as IConv
 
 --import Text.Regex.Posix
-import Bussiness.SimpleRegex
+import Text.Regex.TDFA
 
 patternBegin prop_conn space_conn prop_table space_table prop_limit space_limit prop_type space_type =do
     case (prop_type,space_type) of ("1","1") -> do print 1
@@ -37,10 +39,13 @@ patternOrcl_Orcl prop_conn space_conn prop_table space_table prop_limit space_li
         print stringRows
 
 
-        let test_sql="SELECT count(*) FROM "++ T.unpack(prop_table) ++ "  " ++ " where doorplate like '%"++  stringRows !! 0 ++ "%'"
+        let test_sql="SELECT id,doorplate FROM "++ T.unpack(prop_table) ++ "  " ++ " where doorplate like '%"++  stringRows !! 0 ++ "%'"
         --print test_sql
         testvals <- quickQuery prop_conn_action test_sql []
-        print testvals
+        let myRows = map convRow testvals
+        print myRows
+        a <- (splitDoorplate (myRows !!0) )
+        print a
 
         print "all right"
     where convRow :: [SqlValue] -> String
@@ -73,10 +78,14 @@ patternOrcl_Pg prop_conn space_conn prop_table space_table prop_limit space_limi
           convRow x = fail $ "Unexpected result: " ++ show x
 
 
-splitDoorplate doorplate=do
-    print "ok"
-    --let pat = "([0-9０-９|甲乙丙丁东南西北——|-]+(号|室))"
 
-    --getAllTextMatches $  "安平北路161号鸿溪花园一单元203室" =~ pat :: [String]
+splitDoorplate doorplate=do
+    let name ="纹二路120号中天大厦一单元24室"::String
+    let regex ="[0-9]+[号室]"::String
+--    let parts  =  (name =~ (regex :: String)) ::[String]
+    return ( (doorplate :: String) =~ regex :: [MatchArray])
+--    print (parts !! 0)
+--    print "end"
+
 
 
