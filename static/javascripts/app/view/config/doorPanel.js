@@ -83,6 +83,7 @@ Ext.define('CF.view.config.doorPanel' ,{
                            displayField: 'text',
                            valueField: 'text',
                            emptyText: '请选择表',
+                           disabled:true,
                            listeners: {
                                scope: this,
                                'select': function (combo, records) {
@@ -103,6 +104,11 @@ Ext.define('CF.view.config.doorPanel' ,{
 
                    ]
 
+                },{
+                    fieldLabel: '过滤条件',
+                    value:'where doorplate is not null',
+                    anchor:'100%',
+                    name: 'sql'
                 }]
             }
                 ]
@@ -168,6 +174,7 @@ Ext.define('CF.view.config.doorPanel' ,{
                                     displayField: 'text',
                                     valueField: 'text',
                                     emptyText: '请选择表',
+                                    disabled:true,
                                     listeners: {
                                         scope: this,
                                         'select': function (combo, records) {
@@ -203,6 +210,7 @@ Ext.define('CF.view.config.doorPanel' ,{
          buttons: [
             {
            text: '开始匹配',
+           disabled:false,
            action:'beginpattern'
 
             }

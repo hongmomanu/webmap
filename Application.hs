@@ -1,9 +1,11 @@
+
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 module Application
     ( makeApplication
     , getApplicationDev
     , makeFoundation
     ) where
+
 
 import Import
 import Settings

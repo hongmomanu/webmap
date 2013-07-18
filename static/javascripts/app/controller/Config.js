@@ -137,9 +137,19 @@ Ext.define('CF.controller.Config', {
 
     },
     patternDoorplate:function(button){
-        Ext.Msg.alert("begin partten");
-
+        //Ext.Msg.alert("begin partten");
         var me = this;
+        //testobj=button.up('form').items;
+        if(button.up('form').items.items[0].getForm().findField("proptable").isDisabled()){
+            Ext.Msg.alert("提示信息", "还未选择属性表");
+            return ;
+        }
+        if(button.up('form').items.items[1].getForm().findField("proptable").isDisabled()){
+            Ext.Msg.alert("提示信息", "还未选择空间表");
+            return ;
+        }
+
+
         var successFunc = function (form, action) {
             //var result = Ext.JSON.decode(action.response.responseText)
             Ext.Msg.alert("提示信息", "ok");
@@ -153,6 +163,7 @@ Ext.define('CF.controller.Config', {
         this.formSubmit(button, {}, 'patterndoor', successFunc, failFunc);
 
 
+        //console.log(table_comb);findField("proptable");
 
 
 
@@ -183,12 +194,15 @@ Ext.define('CF.controller.Config', {
 
                 }
             );
+            table_comb.enable();
 
 
         };
         var failFunc = function (form, action) {
             // alert(Ext.JSON.decode(action.response.responseText).msg);
-            Ext.Msg.alert("提示信息", Ext.JSON.decode(action.response.responseText).msg);
+            var table_comb = button.up('form').getForm().findField("proptable");
+            Ext.Msg.alert("错误信息", Ext.JSON.decode(action.response.responseText).msg);
+            table_comb.disable();
 
         };
         this.formSubmit(button, {}, 'checkconnect', successFunc, failFunc);

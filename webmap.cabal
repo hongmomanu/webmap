@@ -33,6 +33,10 @@ library
                      Handler.PatternDoor
                      Bussiness.Tianditu
                      Bussiness.ConnPool
+                     Bussiness.Dbconn
+                     Bussiness.Pattern
+                     CommonFun.ListFunc
+
 
 
     if flag(dev) || flag(library-only)
@@ -75,11 +79,18 @@ library
                  , extensible-exceptions
                  , monad-peel
                  , random
+                 , utf8-string
+                 , iconv
+                 , mtl
+                 , hxt-unicode
+                 , regex-posix
+                 , regex-tdfa
                  , HTTP
                  , http-types
                  , HDBC-odbc
                  , HDBC
-                 , HDBC-postgresql 
+                 , HDBC-postgresql
+                 , array
                  , hamlet                        >= 1.1        && < 1.2
                  , shakespeare-css               >= 1.0        && < 1.1
                  , shakespeare-js                >= 1.0.2      && < 1.2
