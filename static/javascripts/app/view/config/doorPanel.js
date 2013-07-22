@@ -73,7 +73,7 @@ Ext.define('CF.view.config.doorPanel' ,{
 
                    items:[
                        {
-                           columnWidth: 0.7,
+                           columnWidth: 0.6,
                            fieldLabel: '表选择',
                            name: 'proptable',
                            anchor:'100%',
@@ -96,10 +96,25 @@ Ext.define('CF.view.config.doorPanel' ,{
                        },
 
                        {
-                           columnWidth: 0.3,
+                           columnWidth: 0.2,
                            xtype:'button',
                            text : '连接数据库',
                            action:'connect'
+                       },
+
+                       {
+                           columnWidth: 0.2,
+                           xtype:'combo',
+                           name :'issplit',
+                           allowBlank: false,
+                           //fieldLabel : '是否分解',
+                           displayField: 'text',
+                           valueField: 'value',
+                           //defaultValue:false,
+                           value:false,
+                           forceSelection:true,
+                           queryMode: 'local',
+                           store: Ext.widget('issplitcombs')
                        }
 
                    ]
@@ -164,7 +179,7 @@ Ext.define('CF.view.config.doorPanel' ,{
 
                             items:[
                                 {
-                                    columnWidth: 0.7,
+                                    columnWidth: 0.6,
                                     fieldLabel: '表选择',
                                     name: 'proptable',
                                     anchor:'100%',
@@ -187,10 +202,24 @@ Ext.define('CF.view.config.doorPanel' ,{
                                 },
 
                                 {
-                                    columnWidth: 0.3,
+                                    columnWidth: 0.2,
                                     xtype:'button',
                                     text : '连接数据库',
                                     action:'connect'
+                                },
+                                {
+                                    columnWidth: 0.2,
+                                    xtype:'combo',
+                                    name :'issplit',
+                                    allowBlank: false,
+                                    //fieldLabel : '是否分解',
+                                    displayField: 'text',
+                                    valueField: 'value',
+                                    //defaultValue:false,
+                                    value:false,
+                                    forceSelection:true,
+                                    queryMode: 'local',
+                                    store: Ext.widget('issplitcombs')
                                 }
 
                             ]

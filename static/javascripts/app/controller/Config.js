@@ -14,8 +14,8 @@
 Ext.define('CF.controller.Config', {
     extend: 'Ext.app.Controller',
 
-    models: ['SpaceTable'],
-    stores: ['SpaceTables'],
+    models: ['SpaceTable','IssplitComb'],
+    stores: ['SpaceTables','IssplitCombs'],
 
     views: [
         // 'user.List'
