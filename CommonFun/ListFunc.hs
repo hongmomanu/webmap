@@ -11,6 +11,8 @@ slice from to xs = take to (drop from xs)
 
 replace old new =intercalate new . splitOn old
 
+splitList str content= splitOneOf str content
+
 
 replaceList :: [String] ->String ->String ->String
 replaceList [] new content=content

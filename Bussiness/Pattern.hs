@@ -11,6 +11,8 @@ import qualified Data.Text as T (unpack)
 import qualified Data.ByteString.Lazy as L (ByteString,empty)
 import Data.Array (elems)
 
+import Control.Concurrent
+
 --import Data.String.Unicode
 --import Data.ByteString.UTF8 (fromString)
 --import qualified Data.ByteString.Char8 as Char8
@@ -39,6 +41,7 @@ patternBegin prop_conn space_conn prop_table space_table prop_limit space_limit 
 patternToList doorplate=
     do
         doornum <- splitDoorplate doorplate
+        print doornum
         mainroad <- splitDoorplateMainRoad doorplate
         village <- splitDoorplateVillage doorplate
         secroad <- splitDoorplateSecRoad doorplate
@@ -81,6 +84,7 @@ patternFilter doorlist doorplate=
 
 saveSplitDoorplate doorplatelist prop_conn_action prop_table rowid=do
 
+--id,主要道路 , 村社区,居民点,次要道路,楼栋号,单元号,门牌1,门牌2
     let update_sql="update " ++ prop_table ++ "  set 主要道路=?,村社区=?,居民点=?,次要道路=?,楼栋号=?,单元号=?,门牌1=?,门牌2=?  where id=? "
     let string_value=[toSql a | a <- doorplatelist ]
     let int_value=[toSql rowid]
@@ -98,7 +102,7 @@ saveSplitDoorplatePg doorplatelist prop_conn_action prop_table rowid=do
     let string_value=[toSql a | a <- doorplatelist ]
     let int_value=[toSql rowid]
     let sql_values=string_value ++ int_value
-    print sql_values
+    --print sql_values
     run prop_conn_action  update_sql sql_values
     commit prop_conn_action
 
@@ -113,7 +117,7 @@ getOrcl_Orcl prop_conn space_conn prop_table space_table prop_limit space_limit 
 
         vals <- quickQuery   prop_conn_action prop_sql []
         let stringRows = map convRow vals
-        print stringRows
+        --print stringRows
         print "all right"
     where convRow :: [SqlValue] -> [String]
           convRow [sqlId, sqlroad,sqlvillage,sqljmd,sqlsecroad,sqlbuild,sqlcell,sqldoor1,sqldoor2] =
@@ -155,21 +159,87 @@ getOrcl_Orcl prop_conn space_conn prop_table space_table prop_limit space_limit 
 
           convRow x = fail $ "Unexpected result: " ++ show x
 
+--评分确定关联
+makeFlag rows rowdata=do
+                                                          --LF.replaceList [doornum1,doornum2,mainroad,village,secroad,build,cell] "" doorplate
+    let build_list=[row | row <- rows, (row !! 2)  == (rowdata!! 5)]
+    let door_list=[row | row <- rows, (row !! 4)  == (rowdata!! 7) || (if((LF.replaceList ["号"] "" ((LF.splitList "-,－" (row !! 4) )!!0 ::String))  ==((LF.replaceList ["号"] "" ((LF.splitList "-,－" (rowdata!! 7) )!!0))) )then(True)else(False))]
+
+    --sequence [(print ((LF.splitList "-,－" (row !! 4))!!0)) | row <- rows]
+    --print ((LF.splitList "-,－" (rowdata!! 7) ) !!0)
+
+    if ((rowdata!! 5)=="") then (if ((length door_list) >= 1) then (if((length door_list) == 1)then((3,door_list))else((1,door_list))) else ((2,[]))) else (
+                                        if ((length build_list) >= 1) then (if((length build_list) == 1)then((3,build_list))else((1,build_list))) else ((2,[]))
+                                        )
+
+
+--评分确定关联
+makeFlagControl rows rowdata = do
+    --print ((LF.splitList "-,－" (rowdata!! 7) ) !! 0)
+    --sequence [print ((LF.splitList "-,－" (row !! 4)) !! 0) | row <- rows]
+    --print rows
+    if ((length rows)==0) then (return (0,[])) else (return (makeFlag rows rowdata) )
+
+
+
+--更新pg数据库flag
+updatePgflag flag table mapguid gid conn_action=do
+    let update_sql="update \"" ++ T.unpack(table) ++ "\"  set workid=?,flag=?,updatetime=now()  where gid="++gid
+    let string_value=[toSql mapguid ,toSql flag]
+
+    --print string_value
+    print update_sql
+    run conn_action  update_sql string_value
+    commit conn_action
+
+--更新orcl数据库mapid
+updateOrclmapid  table mapid rid conn_action=do
+    let update_sql="update " ++ T.unpack(table) ++ "  set mapid=?  where id= " ++ rid
+    --print update_sql
+    let string_value=[toSql mapid ]
+
+    --print string_value
+
+    run conn_action  update_sql string_value
+    commit conn_action
+
+--保存匹配结果
+savePatternResult flag pgid table_root table_search prop_conn_action space_conn_action uid=do
+    case (fst flag) of 0 -> do updatePgflag (fst flag) table_root (""::String) pgid prop_conn_action
+                       1 -> do sequence [updateOrclmapid table_search uid (head row) space_conn_action | row <- (snd flag)]
+                               updatePgflag (fst flag) table_root ((head(snd flag))!!1)  pgid prop_conn_action
+                       2 -> do updatePgflag (fst flag) table_root (""::String) pgid prop_conn_action
+                       3 -> do updatePgflag (fst flag) table_root ((head(snd flag))!!1) pgid prop_conn_action
+
+
+--    case (fst flag) of 0 -> do updatePgflag 0 table_root "" pgid prop_conn_action
+--                    of 1 -> do print 1
+--                               updatePgflag 1 table_root "" pgid prop_conn_action
+--                               sequence [updateOrclmapid (last row) pgid space_conn_action | row <- (snd flag)]
+--                    of 2 -> do updatePgflag 2 table_root "" pgid prop_conn_action
+--                    of 3 -> do updatePgflag 3 table_root ((head(snd flag))!!1) pgid prop_conn_action
 
 --根据行数据进行匹配
 
-makePatternOrcl rowdata space_conn space_limit space_table=
+makePatternOrcl rowdata space_conn_action space_limit space_table prop_conn_action prop_table=
     do
         let patternlimit_sql=" and (主要道路=? or 村社区=? or 居民点=? or 次要道路=?)"
         let sql="select id, mapguid,楼栋号,单元号,门牌1,门牌2 from "++ T.unpack(space_table) ++ "  " ++ T.unpack(space_limit) ++ patternlimit_sql
-        space_conn_action <- space_conn
-        vals <- quickQuery   space_conn_action sql []
+        --space_conn_action <- space_conn
+
+        --prop_conn_action <- prop_conn
+        let sql_value=[toSql (rowdata!!1) , toSql (rowdata!!2) , toSql (rowdata!!3) ,toSql (rowdata!!4) ]
+
+        vals <- quickQuery   space_conn_action sql sql_value
+
         let stringRows = map convRow vals
+        flag::(Int,[[String]]) <- makeFlagControl stringRows  rowdata
 
+        print  flag
+        savePatternResult flag  (rowdata!!0)  prop_table space_table  prop_conn_action space_conn_action  (last rowdata)
 
+        --return stringRows
 
-
-        print "done"
     where convRow :: [SqlValue] -> [String]
           convRow [sqlId, sqlguid,sqlbuild,sqlcell,sqldoor1,sqldoor2] =
                   [intid,guid,build,cell,door1,door2]
@@ -199,8 +269,63 @@ makePatternOrcl rowdata space_conn space_limit space_table=
 
 getPg_splitdoorplate prop_conn  prop_table  prop_limit  =
     do
+        --print "ooo"
+        --print prop_table
+        let prop_sql="SELECT  gid,\"主要道路\" , \"村社区\",\"居民点\",\"次要道路\",\"楼栋号\",\"单元号\",\"门牌1\",\"门牌2\" ,uid FROM \"" ++ T.unpack(prop_table) ++ "\"  " ++ T.unpack(prop_limit)
+        prop_conn_action <- prop_conn
 
-        let prop_sql="SELECT  gid,\"主要道路\" , \"村社区\",\"居民点\",\"次要道路\",\"楼栋号\",\"单元号\",\"门牌1\",\"门牌2\" FROM " ++ T.unpack(prop_table) ++ "  " ++ T.unpack(prop_limit)
+        vals <- quickQuery   prop_conn_action prop_sql []
+        let stringRows = map convRow vals
+        return stringRows
+        --print "all right"
+    where convRow :: [SqlValue] -> [String]
+          convRow [sqlId, sqlroad,sqlvillage,sqljmd,sqlsecroad,sqlbuild,sqlcell,sqldoor1,sqldoor2,sqluid] =
+                  [intid,road,village,jmd,secroad,build,cell,door1,door2,uid]
+                  where intid = (fromSql sqlId)::String
+                        road    = case fromSql sqlroad of
+                                    Just x -> x
+                                    Nothing -> ""
+
+                        village = case fromSql sqlvillage of
+                                    Just x -> x
+                                    Nothing -> ""
+
+                        jmd =case fromSql sqljmd of
+                                 Just x -> x
+                                 Nothing -> ""
+                        secroad =case fromSql sqlsecroad of
+                                 Just x -> x
+                                 Nothing -> ""
+                        build =case fromSql sqlbuild of
+                                 Just x -> x
+                                 Nothing -> ""
+                        cell=case fromSql sqlcell of
+                                  Just x -> x
+                                  Nothing -> ""
+                        door1=case fromSql sqldoor1 of
+                                  Just x -> x
+                                  Nothing -> ""
+                        door2=case fromSql sqldoor2 of
+                                   Just x -> x
+                                   Nothing -> ""
+                        uid  =case fromSql sqluid of
+                                   Just x -> x
+                                   Nothing -> ""
+
+          convRow x = fail $ "Unexpected result: " ++ show x
+
+
+
+
+
+
+--获取已经分解的门牌数据并进行匹配
+
+getOrcl_splitdoorplate prop_conn  prop_table  prop_limit  =
+    do
+        --print "ooo"
+        --print prop_table
+        let prop_sql="SELECT  id,主要道路 , 村社区,居民点,次要道路,楼栋号,单元号,门牌1,门牌2 FROM " ++ T.unpack(prop_table) ++ "  " ++ T.unpack(prop_limit)
         prop_conn_action <- prop_conn
 
         vals <- quickQuery   prop_conn_action prop_sql []
@@ -310,8 +435,8 @@ patternOrcl_Orcl prop_conn space_conn prop_table space_table prop_limit space_li
         testarr <- patternToList  doorplate
 
         let filter_list=patternFilter testarr  doorplate
-        print doorplate
-        print filter_list
+        --print doorplate
+        --print filter_list
 
         saveSplitDoorplate filter_list prop_conn_action (T.unpack prop_table) (fst (head stringRows))
 
@@ -340,6 +465,7 @@ saveRowSplitOrcl  rowdata table conn_action=do
     let filter_list=patternFilter testarr  doorplate
     saveSplitDoorplate filter_list conn_action (T.unpack table) (fst rowdata)
 
+
 --单个数据更新postgres
 saveRowSplitPg  rowdata table conn_action=do
     let doorplate = snd (rowdata)
@@ -354,9 +480,9 @@ getPgpatternControl issplit pg_conn table limit = do
                                   pg_conn_action <- pg_conn
                                   vals <- quickQuery pg_conn_action sql []
                                   let stringRows = map convRow vals
-                                  print  stringRows
+                                  --print  stringRows
                                   sequence [saveRowSplitPg  rowdata table pg_conn_action | rowdata <- stringRows]
-                                  print "save split over"
+                                  print "split end"
                                where convRow :: [SqlValue] -> (Integer,String)
                                      convRow [sqlId, sqlDoorplate] =
                                              (rid,doorplate)
@@ -370,17 +496,16 @@ getPgpatternControl issplit pg_conn table limit = do
 
 
 
-                    "false" -> do print "get data"
-
+                    "false" -> do print "no split"
 
 getOrclpatternControl issplit orcl_conn table limit = do
     case issplit of "true"  -> do let sql="SELECT id , doorplate FROM "++ T.unpack(table) ++ "  " ++ T.unpack(limit)
                                   orcl_conn_action <- orcl_conn
                                   vals <- quickQuery orcl_conn_action sql []
                                   let stringRows = map convRow vals
-                                  print  stringRows
+                                  --print  stringRows
                                   sequence [saveRowSplitOrcl  rowdata table orcl_conn_action | rowdata <- stringRows]
-                                  print "save split over"
+                                  print "split end"
                                where convRow :: [SqlValue] -> (Integer,String)
                                      convRow [sqlId, sqlDoorplate] =
                                              (rid,doorplate)
@@ -394,7 +519,7 @@ getOrclpatternControl issplit orcl_conn table limit = do
 
 
 
-                    "false" -> do print "just get data"
+                    "false" -> do print "no split"
 
 
 --postgis向orcl查询分解数据并匹配
@@ -416,12 +541,19 @@ patternPg_Orcl prop_conn space_conn prop_table space_table prop_limit space_limi
 
         print "after pattern and save"
         --let space_sql="SELECT id , doorplate FROM "++ T.unpack(space_table) ++ "  " ++ T.unpack(space_limit)
-        --space_conn_action <- space_conn
+        space_conn_action <- space_conn
+        prop_conn_action <- prop_conn
         --space_vals <- quickQuery space_conn_action space_sql []
         --let stringRows_space = map convRow space_vals
         --print  stringRows_space
 
         --sequence [saveRowSplitOrcl  rowdata space_table space_conn_action | rowdata <- stringRows_space ]
+
+        doorplate_split <- getPg_splitdoorplate prop_conn  prop_table  prop_limit
+
+        print "get over"
+
+        sequence [makePatternOrcl rowdata space_conn_action space_limit space_table prop_conn_action prop_table  | rowdata <- doorplate_split]
 
 
         print "done"
@@ -461,7 +593,7 @@ patternOrcl_Pg prop_conn space_conn prop_table space_table prop_limit space_limi
 --分出门牌号
 splitDoorplate doorplate=do
     --let name ="纹二路120号中天大厦一单元24甲室"::String
-    let regex ="[0-9A-Z一二三四五六七八九十东南西北甲乙丙丁]+[号室]"::String
+    let regex ="[0-9A-Z一二三四五六七八九十东南西北甲乙丙丁－-]+[号室]"::String
     return ( doorplate =~ regex :: [MatchArray])
 
 --分出主要道路
@@ -482,12 +614,12 @@ splitDoorplateSecRoad doorplate =do
 
 --分出单元号
 splitDoorplateCell doorplate =do
-    let regex="[0-9０-９A-Z一二三四五六七八九十-]+单元" ::String
+    let regex="[0-9０-９A-Z一二三四五六七八九十－-]+单元" ::String
     return ( doorplate =~ regex :: [MatchArray])
 
 --分出楼栋号
 splitDoorplateBuild doorplate =do
-    let regex="[0-9０-９A-Z一二三四五六七八九十-]+(栋|幢|楼|号楼)" ::String
+    let regex="[0-9０-９A-Z一二三四五六七八九十－-]+(栋|幢|楼|号楼)" ::String
     return ( doorplate =~ regex :: [MatchArray])
 
 --分出居民点
