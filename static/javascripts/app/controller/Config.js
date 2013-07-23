@@ -14,13 +14,14 @@
 Ext.define('CF.controller.Config', {
     extend: 'Ext.app.Controller',
 
-    models: ['SpaceTable','IssplitComb'],
-    stores: ['SpaceTables','IssplitCombs'],
+    models: ['SpaceTable','IssplitComb','PatternProcess'],
+    stores: ['SpaceTables','IssplitCombs','PatternProcesses'],
 
     views: [
         // 'user.List'
         'config.servertypesPanel',
-        'config.doorPanel'
+        'config.doorPanel',
+        //'config.patternStatePanel'
     ],
 
     refs: [

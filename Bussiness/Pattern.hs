@@ -21,6 +21,7 @@ import Control.Concurrent
 --import Text.Regex.Posix
 import Text.Regex.TDFA
 import CommonFun.ListFunc  as LF
+import Data.List
 
 patternBegin prop_conn space_conn prop_table space_table prop_limit space_limit prop_type space_type issplit=do
     case (prop_type,space_type) of ("1","1") -> do print "orcl to orcl"
@@ -195,18 +196,35 @@ updatePgflag flag table mapguid gid conn_action=do
 --更新orcl数据库mapid
 updateOrclmapid  table mapid rid conn_action=do
     let update_sql="update " ++ T.unpack(table) ++ "  set mapid=?  where id= " ++ rid
-    --print update_sql
+    print update_sql
     let string_value=[toSql mapid ]
 
-    --print string_value
+    print string_value
 
     run conn_action  update_sql string_value
     commit conn_action
 
+--更新orcl数据库mapid测试
+updateOrclmapidtest  table mapid rid conn_action=do
+    let update_sql="update " ++ T.unpack(table) ++ "  set mapid=?  where id in (" ++ rid ++ ")"
+    let string_value=[toSql mapid ]
+    run conn_action  update_sql string_value
+    commit conn_action
+    print update_sql
+    --print string_value
+
+
 --保存匹配结果
 savePatternResult flag pgid table_root table_search prop_conn_action space_conn_action uid=do
     case (fst flag) of 0 -> do updatePgflag (fst flag) table_root (""::String) pgid prop_conn_action
-                       1 -> do sequence [updateOrclmapid table_search uid (head row) space_conn_action | row <- (snd flag)]
+                       1 -> do print "begin"
+                               let rowids=[head row | row <- (snd flag)]
+                               let rowids_str=intercalate "," rowids
+                               --print rowids_str
+                               --print "123,456,123"
+                               updateOrclmapidtest table_search uid rowids_str space_conn_action
+                               --sequence [updateOrclmapidtest table_search uid (head row) space_conn_action | row <- (snd flag)]
+                               --a <- sequence [updateOrclmapid table_search uid (head row) space_conn_action | row <- (snd flag)]
                                updatePgflag (fst flag) table_root ((head(snd flag))!!1)  pgid prop_conn_action
                        2 -> do updatePgflag (fst flag) table_root (""::String) pgid prop_conn_action
                        3 -> do updatePgflag (fst flag) table_root ((head(snd flag))!!1) pgid prop_conn_action
