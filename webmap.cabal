@@ -31,6 +31,7 @@ library
                      Handler.Test
                      Handler.CheckConnect
                      Handler.PatternDoor
+                     Handler.CurrentStatus
                      Bussiness.Tianditu
                      Bussiness.ConnPool
                      Bussiness.Dbconn
@@ -91,6 +92,7 @@ library
                  , HDBC
                  , HDBC-postgresql
                  , array
+                 , global-variables
                  , split
                  , hamlet                        >= 1.1        && < 1.2
                  , shakespeare-css               >= 1.0        && < 1.1

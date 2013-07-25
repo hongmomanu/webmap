@@ -16,3 +16,4 @@
 /test TestR GET
 /checkconnect CheckConnectR POST
 /patterndoor PatternDoorR POST
+/currentstatus CurrentStatusR GET

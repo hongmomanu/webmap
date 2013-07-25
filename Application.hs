@@ -35,6 +35,7 @@ import Handler.Maptodo
 import Handler.Test
 import Handler.CheckConnect
 import Handler.PatternDoor
+import Handler.CurrentStatus
 
 
 -- This line actually creates our YesodDispatch instance. It is the second half

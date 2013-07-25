@@ -35,7 +35,7 @@ Ext.define('CF.view.config.doorPanel' ,{
                             {
 
                                 xtype: 'fieldset',
-                                title:'属性数据',
+                                title:'空间数据',
                                 layout: 'anchor',
                                 defaultType: 'textfield',
                                 items: [{
@@ -125,7 +125,13 @@ Ext.define('CF.view.config.doorPanel' ,{
 
                                     ]
 
-                                },{
+                                },
+                                    ,{
+                                        fieldLabel: '主键',
+                                        value:'gid',
+                                        anchor:'100%',
+                                        name: 'mainkey'
+                                    },{
                                     fieldLabel: '过滤条件',
                                     value:'where doorplate is not null',
                                     anchor:'100%',
@@ -141,7 +147,7 @@ Ext.define('CF.view.config.doorPanel' ,{
                             {
 
                                 xtype: 'fieldset',
-                                title:'空间数据',
+                                title:'属性数据',
                                 layout: 'anchor',
                                 defaultType: 'textfield',
                                 items: [{
@@ -231,6 +237,12 @@ Ext.define('CF.view.config.doorPanel' ,{
                                     ]
 
                                 }
+                                    ,{
+                                        fieldLabel: '主键',
+                                        value:'id',
+                                        anchor:'100%',
+                                        name: 'mainkey'
+                                    }
                                     ,{
                                         fieldLabel: '过滤条件',
                                         value:'where doorplate is not null',

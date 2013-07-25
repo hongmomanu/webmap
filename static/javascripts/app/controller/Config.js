@@ -140,12 +140,12 @@ Ext.define('CF.controller.Config', {
     patternDoorplate:function(button){
         //Ext.Msg.alert("begin partten");
         var me = this;
-        //testobj=button.up('form').items;
-        if(button.up('form').items.items[0].getForm().findField("proptable").isDisabled()){
+        testobj=button.up('form').items;
+        if(button.up('form').items.items[0].items.items[0].getForm().findField("proptable").isDisabled()){
             Ext.Msg.alert("提示信息", "还未选择属性表");
             return ;
         }
-        if(button.up('form').items.items[1].getForm().findField("proptable").isDisabled()){
+        if(button.up('form').items.items[0].items.items[1].getForm().findField("proptable").isDisabled()){
             Ext.Msg.alert("提示信息", "还未选择空间表");
             return ;
         }
