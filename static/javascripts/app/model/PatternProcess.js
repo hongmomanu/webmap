@@ -9,9 +9,23 @@ Ext.define('CF.model.PatternProcess', {
     extend: 'Ext.data.Model',
     fields: [
         {
-            name: 'mission',
+            name: 'table',
             type:'string'
-        },{
+        },
+        {
+            name: 'user',
+            type:'string'
+        },
+        {
+            name: 'statue',
+            type:'string'
+        },
+        {
+            name: 'statue',
+            type:'time'
+        },
+
+        {
             name: 'process',
             type:'string'
         }

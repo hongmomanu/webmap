@@ -11,7 +11,8 @@ Ext.define('CF.store.PatternProcesses', {
     autoLoad:true,
     proxy:{
         type: 'ajax',
-        url: '/static/javascripts/data/test.json'
+
+        url: 'currentstatus'
     }
 
 });

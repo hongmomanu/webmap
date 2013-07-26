@@ -20,12 +20,15 @@ Ext.define('CF.view.config.patternStatePanel' ,{
             columns: [
 
 
-                {header: '任务', dataIndex: 'mission'},
+                {header: '用户', dataIndex: 'user'},
+                {header: '表名', dataIndex: 'table'},
+                {header: '时间', dataIndex: 'time'},
+                {header: '状态', dataIndex: 'statue'},
                 {
                     xtype: 'gridcolumn',
                     //width: 110,
                     flex:1,
-                    dataIndex: 'process',
+                    dataIndex: 'value',
                     text: '进度',
                     renderer: function (value, metaData, record) {
                         var id = Ext.id();
