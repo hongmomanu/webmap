@@ -28,7 +28,8 @@ postPatternDoorR = do
     --liftIO $ print issplit
     statue <-liftIO $ readIORef Pa.patterStatuesVar
     time <-liftIO $  getCurrentTime
-    let statues=statue ++ [[head mytables,head users,T.pack (show time),T.pack(show 1),T.pack(show 0)]]
+    let statues=statue ++ [[head mytables,head users,T.pack (show time),T.pack("初始化"),T.pack(show 0),
+            T.pack(show 0),T.pack(show 0),T.pack(show 0),T.pack(show 0)]]
     liftIO $ writeIORef (Pa.patterStatuesVar) statues
     liftIO $ print statues
     --懒惰加载数据连接

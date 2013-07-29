@@ -45,7 +45,22 @@ Ext.define('CF.view.config.patternStatePanel' ,{
                     renderer: function (value, metaData, record) {
                         var id = Ext.id();
                         var displayValue=Math.round(value*100);
-                        metaData.tdAttr = 'data-qtip="'+displayValue+'%"';
+                        console.log(record);
+                        //metaData.tdAttr = 'data-qtip="匹配数据:'+displayValue+'%<br>完全匹配:1000<br>相似匹配:"';
+                        if(record.raw.statue==='匹配数据'){
+
+                            metaData.tdAttr = 'data-qtip="处理数据:&nbsp;'+record.raw.over+'<br>完全匹配:&nbsp;'
+                                                +record.raw.patterned
+                                +'&nbsp;('+Math.round(parseInt(record.raw.patterned)/parseInt(record.raw.over)*100)+'%)'
+                                +'<br>相似数据:&nbsp;'+record.raw.similar
+                                +'&nbsp;('+Math.round(parseInt(record.raw.similar)/parseInt(record.raw.over)*100)+'%)'
+                                               +'<br>无匹配数据:&nbsp;'+record.raw.no
+                                +'&nbsp;('+Math.round(parseInt(record.raw.no)/parseInt(record.raw.over)*100)+'%)"';
+
+                        }else{
+
+                            metaData.tdAttr = 'data-qtip="进度:'+displayValue+'%"';
+                        }
                         Ext.defer(function () {
                             Ext.widget('progressbar', {
                                 renderTo: id,

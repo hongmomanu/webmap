@@ -350,7 +350,7 @@ makePatternOrcl_Orcl rowdata space_conn_action space_limit space_table prop_conn
         savePatternResultOrcl_Orcl flag  (rowdata!!0)  prop_table space_table  prop_conn_action space_conn_action  (last rowdata) mainkey
 
 
-        splitStatue  totalnum time prop_table "匹配数据"
+        splitStatue  totalnum time prop_table "匹配数据" (fst flag)
         --return stringRows
 
 
@@ -407,7 +407,7 @@ makePatternOrcl rowdata space_conn_action space_limit space_table prop_conn_acti
 
         savePatternResult flag  (rowdata!!0)  prop_table space_table  prop_conn_action space_conn_action  (last rowdata) mainkey
 
-        splitStatue  totalnum time prop_table "匹配数据"
+        splitStatue  totalnum time prop_table "匹配数据"  (fst flag)
 
         --return stringRows
 
@@ -624,14 +624,20 @@ similarOrcl_Pg list prop_table prop_conn_action=do
 
 initStatueValue time=do
     statue <- readIORef patterStatuesVar
-    let statu_arr=[if(a!!2==time)then([a!!0,a!!1,a!!2,a!!3, T.pack("0")])
+    let statu_arr=[if(a!!2==time)then([a!!0,a!!1,a!!2,a!!3, T.pack("0"), T.pack("0"), T.pack("0"), T.pack("0"), T.pack("0")])
                          else(a) | a<-statue]
     writeIORef patterStatuesVar statu_arr
 
 
-splitStatue totalnum time table mystatue=do
+splitStatue totalnum time table mystatue flag=do
     statue <- readIORef patterStatuesVar
-    let statu_arr=[if(a!!2==time)then([table,a!!1,a!!2,T.pack(mystatue), T.pack( show (((read (T.unpack (a!!4)) )::Float) + (1/totalnum)))])
+    let statu_arr=[if(a!!2==time)then([table,a!!1,a!!2,T.pack(mystatue),
+                        T.pack(show (((read (T.unpack (a!!4)) )::Float) + (1/totalnum))),
+                        T.pack(show ((read (T.unpack (a!!5))) + 1)),
+                        if(flag==1||flag==3)then(T.pack(show ((read (T.unpack (a!!6))) + (1::Int))))else(a!!6),
+                        if(flag==2)then(T.pack(show ((read (T.unpack (a!!7))) + 1::Int)))else(a!!7),
+                        if(flag==0)then(T.pack(show ((read (T.unpack (a!!8))) + 1::Int)))else(a!!8)
+                        ])
                      else(a) | a<-statue]
     writeIORef patterStatuesVar statu_arr
     --print "done"
@@ -643,7 +649,7 @@ saveRowSplitOrcl  rowdata table conn_action time totalnum mainkey=do
     testarr <- patternToList  doorplate
     let filter_list=patternFilter testarr  doorplate
     saveSplitDoorplate filter_list conn_action (T.unpack table) (fst rowdata) mainkey
-    splitStatue  totalnum time table "分解数据"
+    splitStatue  totalnum time table "分解数据" (-1)
 
 --单个数据更新postgres
 saveRowSplitPg  rowdata table conn_action time totalnum mainkey=do
@@ -656,7 +662,7 @@ saveRowSplitPg  rowdata table conn_action time totalnum mainkey=do
     --let statu_arr=[if(a!!2==time)then([a!!0,a!!1,a!!2,T.pack("正在匹配"), T.pack( show (((read (T.unpack (a!!4)) )::Float) + (1/totalnum)))])
     --                 else(a) | a<-statue]
     --writeIORef patterStatuesVar statu_arr
-    splitStatue  totalnum time table "分解数据"
+    splitStatue  totalnum time table "分解数据"  (-1)
     --print "done"
 
 
