@@ -21,7 +21,7 @@ Ext.define('CF.controller.Config', {
         // 'user.List'
         'config.servertypesPanel',
         'config.doorPanel',
-        //'config.patternStatePanel'
+        'config.patternStatePanel'
     ],
 
     refs: [
@@ -32,7 +32,15 @@ Ext.define('CF.controller.Config', {
         {
             ref: 'doorPanel',
             selector: 'doorpanel'
-        }
+        },
+        {
+            ref: 'patternStatePanel',
+            selector: 'patternstatepanel'
+        }/**,
+        {
+            //ref: 'PatternProcesses',
+            //selector: 'patternprocess'
+        }**/
         /*{ref: 'summitChart', selector: 'summitchart'},
          {ref: 'summitGrid', selector: 'summitgrid'}*/
     ],
@@ -61,6 +69,9 @@ Ext.define('CF.controller.Config', {
                 click :this.patternDoorplate
 
             },
+            'doorpanel':{
+                afterrender:this.initDoorPanelFunc
+            },
             'servertypespanel': {
                 itemcontextmenu: this.showMenu
             },
@@ -69,6 +80,24 @@ Ext.define('CF.controller.Config', {
             }
 
         }, this);
+    },
+    initDoorPanelFunc:function(){
+        //console.log(11);
+        //test=this;
+        //console.log(this.getDoorPanel());
+        //unmask();
+        var processstore=this.getPatternProcessesStore();
+        var ProcessSession = {
+            run: function () {
+                if(Ext.getCmp("isgetRefreshData").checked){
+                    processstore.load();
+                }
+
+            },
+            interval: 3000 //1000=1 second
+        };
+        Ext.TaskManager.start(ProcessSession);
+        //console.log(this.getPatternProcess())
     },
     showMenu: function (panelView, record, item, index, e, eOpts) {
         var me = this;
@@ -140,7 +169,7 @@ Ext.define('CF.controller.Config', {
     patternDoorplate:function(button){
         //Ext.Msg.alert("begin partten");
         var me = this;
-        testobj=button.up('form').items;
+        //testobj=button.up('form').items;
         if(button.up('form').items.items[0].items.items[0].getForm().findField("proptable").isDisabled()){
             Ext.Msg.alert("提示信息", "还未选择属性表");
             return ;
@@ -149,16 +178,21 @@ Ext.define('CF.controller.Config', {
             Ext.Msg.alert("提示信息", "还未选择空间表");
             return ;
         }
-
-
+        //alert("出发");
+        //this.initDoorPanelFunc();
         var successFunc = function (form, action) {
             //var result = Ext.JSON.decode(action.response.responseText)
-            Ext.Msg.alert("提示信息", "ok");
+            var result = Ext.JSON.decode(action.response.responseText)
+            Ext.Msg.alert("提示信息", result.msg);
+
+            //me.initDoorPanelFunc
+
+            //Ext.Msg.alert("提示信息", "ok");
 
         };
         var failFunc = function (form, action) {
-            // alert(Ext.JSON.decode(action.response.responseText).msg);
-            Ext.Msg.alert("提示信息", "hh");
+            //alert(Ext.JSON.decode(action.response.responseText).msg);
+            Ext.Msg.alert("提示信息", "服务失败");
 
         };
         this.formSubmit(button, {}, 'patterndoor', successFunc, failFunc);
@@ -218,8 +252,8 @@ Ext.define('CF.controller.Config', {
         };
         var successFunc = function (form, action) {
 
-            console.log(form);
-            console.log(action);
+            //console.log(form);
+            //console.log(action);
 
         };
         var failFunc = function (form, action) {
@@ -235,7 +269,7 @@ Ext.define('CF.controller.Config', {
 
             form.submit({
                 waitTitle: '提示', //标题
-                waitMsg: '正在保存数据请稍后...', //提示信息
+                waitMsg: '正在处理数据请稍后...', //提示信息
                 url: url,
 
                 method: "POST",
@@ -257,8 +291,8 @@ Ext.define('CF.controller.Config', {
 
         var successFunc = function (form, action) {
 
-            console.log(form);
-            console.log(action);
+            //console.log(form);
+            //console.log(action);
 
         };
         var failFunc = function (form, action) {
@@ -270,6 +304,9 @@ Ext.define('CF.controller.Config', {
 
     onLaunch: function () {
         var me = this;
+
+        //alert("haha");
+        //console.log(this.getServertypesPanel());
 
         // for dev purpose
         //ctrl = this;

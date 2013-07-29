@@ -8,6 +8,9 @@
 Ext.define('CF.store.PatternProcesses', {
     extend: 'Ext.data.Store',
     model: 'CF.model.PatternProcess',
+    alias : 'widget.patternprocess',
+
+
     autoLoad:true,
     proxy:{
         type: 'ajax',

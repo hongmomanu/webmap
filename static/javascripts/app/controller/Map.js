@@ -63,7 +63,7 @@ Ext.define('CF.controller.Map', {
         );
         var tianditu_layer=new OpenLayers.Layer.TiandituLayer(1,
             //mapserverUrl+'?mapower='+mapower+"&maplabel="+maplabel
-            "http://127.0.0.1/gnc/1"
+            "http://192.168.2.112/gnc/1"
             ,{
                 //mapType:"tian",
                 //id:"layerid",

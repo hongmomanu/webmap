@@ -15,6 +15,7 @@ Ext.define('CF.view.config.doorPanel' ,{
     //bodyPadding: 5,
     //layout: 'fit',
 
+
     requires: [
         'CF.view.config.patternStatePanel'
     ],
@@ -258,7 +259,7 @@ Ext.define('CF.view.config.doorPanel' ,{
             },
             {
                xtype:'patternstatepanel',
-               height:300,
+               height:250,
 
                title:'状态'
             }
@@ -266,6 +267,14 @@ Ext.define('CF.view.config.doorPanel' ,{
         ],
 
          buttons: [
+             {
+                 xtype:"checkbox",
+                 boxLabel  : '实时获取数据',
+                 name      : 'topping',
+                 inputValue: '2',
+                 checked   : false,
+                 id        : 'isgetRefreshData'
+             },
             {
            text: '开始匹配',
            disabled:false,
@@ -277,6 +286,9 @@ Ext.define('CF.view.config.doorPanel' ,{
 		   ]
         });
         this.callParent(arguments);
+
+
+        //store.loadPage(1);
         // store singleton selection model instance
     }
 });

@@ -40,10 +40,11 @@ postPatternDoorR = do
                  )
     --prop_conn <- liftIO $ (fst prop_db)
     --tables <- liftIO $ getTables prop_conn
-    liftIO $ Pa.patternBegin prop_db  space_db   (mytables !! 0) (mytables !! 1)  (sqls !! 0) (sqls !! 1) (databasetypes !! 0) (databasetypes !! 1) issplit mainkey (T.pack (show time))
-    --liftIO $ print  tables
-    liftIO $ print hosts
-    liftIO $ print dbnames
-    return  $ object ["success" .= True,"msg" .= mytables]
+    --forkIO (writeFile "xyzzy" "seo craic nua!") >> doesFileExist "xyzzy"
+
+    liftIO $ forkIO (Pa.patternBegin prop_db  space_db   (mytables !! 0) (mytables !! 1)  (sqls !! 0) (sqls !! 1) (databasetypes !! 0) (databasetypes !! 1) issplit mainkey (T.pack (show time)))>> print "ok"
+    return  $ object ["success" .= True,"msg" .= ("正在处理数据"::Text)]
+
+    --return  $ object ["success" .= True,"msg" .= mytables]
 
 

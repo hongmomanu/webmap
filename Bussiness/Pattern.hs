@@ -41,7 +41,7 @@ patternBegin prop_conn space_conn prop_table space_table prop_limit space_limit 
                                                    --else (getOrcl_Orcl (snd prop_conn) (snd space_conn) prop_table space_table prop_limit space_limit prop_type space_type)
 
                                    ("1","0") -> do print "orcl to pg"
-                                                   patternOrcl_Pg (snd prop_conn) (fst space_conn) prop_table space_table prop_limit space_limit prop_type space_type  issplit keys  time
+                                                   --patternOrcl_Pg (snd prop_conn) (fst space_conn) prop_table space_table prop_limit space_limit prop_type space_type  issplit keys  time
                                                    --                     else (getOrcl_Pg (snd prop_conn) (fst space_conn) prop_table space_table prop_limit space_limit prop_type space_type)
                                    ("0","1") -> do print "pg to orcl"
                                                    patternPg_Orcl (fst prop_conn) (snd space_conn) prop_table space_table prop_limit space_limit prop_type space_type   issplit keys  time
@@ -66,8 +66,8 @@ patternToList doorplate=
 
 
 
-        let mainroad_arr=if((length village_index) >0)then (if (length (map elems mainroad) >0 ) then (map (\[(a,b),(c,d)] -> if((a+b)/=(head(head village_index)))then(LF.slice 0 (a+b) doorplate)else("") ) (map elems mainroad))  else ([]))
-                                                      else(if (length (map elems mainroad) >0 ) then (map (\[(a,b),(c,d)] -> LF.slice 0 (a+b) doorplate) (map elems mainroad))  else ([]))
+        let mainroad_arr=if((length village_index) >0)then (if (length (map elems mainroad) >0 ) then (map (\[(a,b),(c,d)] -> if((a+b)/=(head(head village_index)))then(LF.slice a b doorplate)else("") ) (map elems mainroad))  else ([]))
+                                                      else(if (length (map elems mainroad) >0 ) then (map (\[(a,b),(c,d)] -> LF.slice a b doorplate) (map elems mainroad))  else ([]))
 
         --let village_arr=if (length (map elems village) >0 ) then (map (\[(a,b),(c,d)] -> if()LF.slice 0 (a+b) doorplate ) (map elems village))  else ([])
         --print (map elems village)
@@ -86,7 +86,7 @@ patternToList doorplate=
         secroad <- splitDoorplateSecRoad doorplate
 
 
-        print  village_arr
+        --print  village_arr
 
         build <- splitDoorplateBuild doorplate
         cell <- splitDoorplateCell doorplate
@@ -134,23 +134,24 @@ patternFilter doorlist doorplate=
 
 --保存分解的门牌数据
 
-saveSplitDoorplate doorplatelist prop_conn_action prop_table rowid=do
+saveSplitDoorplate doorplatelist prop_conn_action prop_table rowid maikey=do
 
 --id,主要道路 , 村社区,居民点,次要道路,楼栋号,单元号,门牌1,门牌2
-    let update_sql="update " ++ prop_table ++ "  set 主要道路=?,村社区=?,居民点=?,次要道路=?,楼栋号=?,单元号=?,门牌1=?,门牌2=?  where id=? "
+    let update_sql="update " ++ prop_table ++ "  set 主要道路=?,村社区=?,居民点=?,次要道路=?,楼栋号=?,单元号=?,门牌1=?,门牌2=?  where "++maikey++"=? "
     let string_value=[toSql a | a <- doorplatelist ]
     let int_value=[toSql rowid]
     let sql_values=string_value ++ int_value
     print sql_values
+    print update_sql
     run prop_conn_action  update_sql sql_values
     commit prop_conn_action
 
 
 --保存分解到postgis数据
 
-saveSplitDoorplatePg doorplatelist prop_conn_action prop_table rowid=do
+saveSplitDoorplatePg doorplatelist prop_conn_action prop_table rowid maikey=do
 
-    let update_sql="update \"" ++ prop_table ++ "\"  set \"主要道路\"=?,\"村社区\"=?,\"居民点\"=?,\"次要道路\"=?,\"楼栋号\"=?,\"单元号\"=?,\"门牌1\"=?,\"门牌2\"=? ,updatetime=now() where gid=? "
+    let update_sql="update \"" ++ prop_table ++ "\"  set \"主要道路\"=?,\"村社区\"=?,\"居民点\"=?,\"次要道路\"=?,\"楼栋号\"=?,\"单元号\"=?,\"门牌1\"=?,\"门牌2\"=? ,updatetime=now() where "++maikey++"=? "
     let string_value=[toSql a | a <- doorplatelist ]
     let int_value=[toSql rowid]
     let sql_values=string_value ++ int_value
@@ -328,7 +329,7 @@ savePatternResult flag pgid table_root table_search prop_conn_action space_conn_
 
 
 --根据行数据进行匹配 orcl-orcl
-makePatternOrcl_Orcl rowdata space_conn_action space_limit space_table prop_conn_action prop_table mainkey time=
+makePatternOrcl_Orcl rowdata space_conn_action space_limit space_table prop_conn_action prop_table mainkey time totalnum=
 
     do
         let patternlimit_sql=" and (主要道路=? or 村社区=? or 居民点=? or 次要道路=?)"
@@ -343,10 +344,15 @@ makePatternOrcl_Orcl rowdata space_conn_action space_limit space_table prop_conn
         let stringRows = map convRow vals
         flag::(Int,[[String]]) <- makeFlagControl stringRows  rowdata
 
-        print  flag
+
+
+        --print  flag
         savePatternResultOrcl_Orcl flag  (rowdata!!0)  prop_table space_table  prop_conn_action space_conn_action  (last rowdata) mainkey
 
+
+        splitStatue  totalnum time prop_table "匹配数据"
         --return stringRows
+
 
     where convRow :: [SqlValue] -> [String]
           convRow [sqlId, sqlguid,sqlbuild,sqlcell,sqldoor1,sqldoor2] =
@@ -381,7 +387,7 @@ makePatternOrcl_Orcl rowdata space_conn_action space_limit space_table prop_conn
 
 --根据行数据进行匹配 pg-orcl
 
-makePatternOrcl rowdata space_conn_action space_limit space_table prop_conn_action prop_table mainkey time=
+makePatternOrcl rowdata space_conn_action space_limit space_table prop_conn_action prop_table mainkey time totalnum=
     do
         let patternlimit_sql=" and (主要道路=? or 村社区=? or 居民点=? or 次要道路=?)"
         let sql="select "++ (mainkey !!1) ++", mapguid,楼栋号,单元号,门牌1,门牌2 from "++ T.unpack(space_table) ++ "  " ++ T.unpack(space_limit) ++ patternlimit_sql
@@ -395,8 +401,13 @@ makePatternOrcl rowdata space_conn_action space_limit space_table prop_conn_acti
         let stringRows = map convRow vals
         flag::(Int,[[String]]) <- makeFlagControl stringRows  rowdata
 
-        print  flag
+        --print  flag
+
+
+
         savePatternResult flag  (rowdata!!0)  prop_table space_table  prop_conn_action space_conn_action  (last rowdata) mainkey
+
+        splitStatue  totalnum time prop_table "匹配数据"
 
         --return stringRows
 
@@ -587,27 +598,19 @@ patternOrcl_Orcl prop_conn space_conn prop_table space_table prop_limit space_li
     do
 
         getOrclpatternControl (issplit!!0)  prop_conn prop_table prop_limit (mainkey!!0) time
-        print "after pg patter"
         getOrclpatternControl (issplit!!1)  space_conn  space_table  space_limit (mainkey!!1) time
-        print "after orcle patter"
 
-        --let stringRows_pg=getPg_splitdoorplate prop_conn  prop_table  prop_limit
-
-        print "after pattern and save"
-        --let space_sql="SELECT id , doorplate FROM "++ T.unpack(space_table) ++ "  " ++ T.unpack(space_limit)
         space_conn_action <- space_conn
         prop_conn_action <- prop_conn
-        --space_vals <- quickQuery space_conn_action space_sql []
-        --let stringRows_space = map convRow space_vals
-        --print  stringRows_space
-
-        --sequence [saveRowSplitOrcl  rowdata space_table space_conn_action | rowdata <- stringRows_space ]
 
         doorplate_split <- getOrcl_splitdoorplate prop_conn  prop_table  prop_limit (mainkey!!0)
 
+        let totalnum =length doorplate_split
+        if(totalnum >0)then(initStatueValue time)else(print "nothing")
+
         print "get over"
 
-        sequence [makePatternOrcl_Orcl rowdata space_conn_action space_limit space_table prop_conn_action prop_table mainkey time | rowdata <- doorplate_split]
+        sequence [makePatternOrcl_Orcl rowdata space_conn_action space_limit space_table prop_conn_action prop_table mainkey time (fromIntegral totalnum ::Float) | rowdata <- doorplate_split]
 
 
         print "done"
@@ -618,27 +621,43 @@ similarOrcl_Pg list prop_table prop_conn_action=do
     print "not done"
 
 
---单个数据更新orcl
-saveRowSplitOrcl  rowdata table conn_action=do
-    print "save begin"
-    let doorplate = snd (rowdata)
-    testarr <- patternToList  doorplate
-    let filter_list=patternFilter testarr  doorplate
-    saveSplitDoorplate filter_list conn_action (T.unpack table) (fst rowdata)
 
-
---单个数据更新postgres
-saveRowSplitPg  rowdata table conn_action time totalnum=do
-    let doorplate = snd (rowdata)
-    testarr <- patternToList  doorplate
-    let filter_list=patternFilter testarr  doorplate
-    saveSplitDoorplatePg filter_list conn_action (T.unpack table) (fst rowdata)
-
+initStatueValue time=do
     statue <- readIORef patterStatuesVar
-    let statu_arr=[if(a!!2==time)then([a!!0,a!!1,a!!2,T.pack("正在匹配"), T.pack( show (((read (T.unpack (a!!4)) )::Float) + (1/totalnum)))])
+    let statu_arr=[if(a!!2==time)then([a!!0,a!!1,a!!2,a!!3, T.pack("0")])
+                         else(a) | a<-statue]
+    writeIORef patterStatuesVar statu_arr
+
+
+splitStatue totalnum time table mystatue=do
+    statue <- readIORef patterStatuesVar
+    let statu_arr=[if(a!!2==time)then([table,a!!1,a!!2,T.pack(mystatue), T.pack( show (((read (T.unpack (a!!4)) )::Float) + (1/totalnum)))])
                      else(a) | a<-statue]
     writeIORef patterStatuesVar statu_arr
-    print "done"
+    --print "done"
+
+--单个数据更新orcl
+saveRowSplitOrcl  rowdata table conn_action time totalnum mainkey=do
+    --print "save begin"
+    let doorplate = snd (rowdata)
+    testarr <- patternToList  doorplate
+    let filter_list=patternFilter testarr  doorplate
+    saveSplitDoorplate filter_list conn_action (T.unpack table) (fst rowdata) mainkey
+    splitStatue  totalnum time table "分解数据"
+
+--单个数据更新postgres
+saveRowSplitPg  rowdata table conn_action time totalnum mainkey=do
+    let doorplate = snd (rowdata)
+    testarr <- patternToList  doorplate
+    let filter_list=patternFilter testarr  doorplate
+    saveSplitDoorplatePg filter_list conn_action (T.unpack table) (fst rowdata) mainkey
+
+    --statue <- readIORef patterStatuesVar
+    --let statu_arr=[if(a!!2==time)then([a!!0,a!!1,a!!2,T.pack("正在匹配"), T.pack( show (((read (T.unpack (a!!4)) )::Float) + (1/totalnum)))])
+    --                 else(a) | a<-statue]
+    --writeIORef patterStatuesVar statu_arr
+    splitStatue  totalnum time table "分解数据"
+    --print "done"
 
 
 
@@ -649,8 +668,9 @@ getPgpatternControl issplit pg_conn table limit mainkey time= do
                                   vals <- quickQuery pg_conn_action sql []
                                   let stringRows = map convRow vals
                                   --print  stringRows
+                                  initStatueValue time
                                   let totalnum =length stringRows
-                                  sequence [saveRowSplitPg  rowdata table pg_conn_action time (fromIntegral totalnum ::Float) | rowdata <- stringRows]
+                                  sequence [saveRowSplitPg  rowdata table pg_conn_action time (fromIntegral totalnum ::Float) mainkey| rowdata <- stringRows]
                                   print "split end"
                                where convRow :: [SqlValue] -> (Integer,String)
                                      convRow [sqlId, sqlDoorplate] =
@@ -679,7 +699,9 @@ getOrclpatternControl issplit orcl_conn table limit mainkey time= do
                                   vals <- quickQuery orcl_conn_action sql []
                                   let stringRows = map convRow vals
                                   --print  stringRows
-                                  sequence [saveRowSplitOrcl  rowdata table orcl_conn_action | rowdata <- stringRows]
+                                  initStatueValue time
+                                  let totalnum =length stringRows
+                                  sequence [saveRowSplitOrcl  rowdata table orcl_conn_action time (fromIntegral totalnum ::Float) mainkey | rowdata <- stringRows]
                                   print "split end"
                                where convRow :: [SqlValue] -> (Integer,String)
                                      convRow [sqlId, sqlDoorplate] =
@@ -702,35 +724,19 @@ getOrclpatternControl issplit orcl_conn table limit mainkey time= do
 --postgis向orcl查询分解数据并匹配
 patternPg_Orcl prop_conn space_conn prop_table space_table prop_limit space_limit prop_type space_type issplit mainkey time=
     do
-        --let doornum1=if(length (doorlist !! 0) >0) then ( head (doorlist !!0) ) else ("")
 
-        --let prop_sql="SELECT gid , doorplate FROM "++ T.unpack(prop_table) ++ "  " ++ T.unpack(prop_limit)
-        --prop_conn_action <- prop_conn
-        --vals <- quickQuery prop_conn_action prop_sql []
-        --let stringRows = map convRow vals
-        --sequence [saveRowSplitPg  rowdata prop_table prop_conn_action | rowdata <- stringRows ]
         getPgpatternControl (issplit!!0)  prop_conn prop_table prop_limit (mainkey !!0) time
-        print "after pg patter"
         getOrclpatternControl (issplit!!1)  space_conn  space_table  space_limit (mainkey !!1) time
-        print "after orcle patter"
 
-        --let stringRows_pg=getPg_splitdoorplate prop_conn  prop_table  prop_limit
-
-        print "after pattern and save"
-        --let space_sql="SELECT id , doorplate FROM "++ T.unpack(space_table) ++ "  " ++ T.unpack(space_limit)
         space_conn_action <- space_conn
         prop_conn_action <- prop_conn
-        --space_vals <- quickQuery space_conn_action space_sql []
-        --let stringRows_space = map convRow space_vals
-        --print  stringRows_space
-
-        --sequence [saveRowSplitOrcl  rowdata space_table space_conn_action | rowdata <- stringRows_space ]
 
         doorplate_split <- getPg_splitdoorplate prop_conn  prop_table  prop_limit (mainkey !!0)
+        let totalnum =length doorplate_split
+        if(totalnum >0)then(initStatueValue time)else(print "nothing")
 
-        print "get over"
 
-        sequence [makePatternOrcl rowdata space_conn_action space_limit space_table prop_conn_action prop_table mainkey time| rowdata <- doorplate_split]
+        sequence [makePatternOrcl rowdata space_conn_action space_limit space_table prop_conn_action prop_table mainkey time (fromIntegral totalnum ::Float)  | rowdata <- doorplate_split]
 
 
         print "done"
@@ -744,7 +750,10 @@ patternOrcl_Pg prop_conn space_conn prop_table space_table prop_limit space_limi
         prop_conn_action <- prop_conn
         vals <- quickQuery prop_conn_action prop_sql []
         let stringRows = map convRow vals
-        sequence [saveRowSplitOrcl  rowdata prop_table prop_conn_action | rowdata <- stringRows ]
+
+        let totalnum =length stringRows
+
+        sequence [saveRowSplitOrcl  rowdata prop_table prop_conn_action time (fromIntegral totalnum ::Float) mainkey| rowdata <- stringRows ]
 
 
         let space_sql="SELECT gid , doorplate FROM "++ T.unpack(space_table) ++ "  " ++ T.unpack(space_limit)
@@ -752,7 +761,7 @@ patternOrcl_Pg prop_conn space_conn prop_table space_table prop_limit space_limi
         space_vals <- quickQuery space_conn_action space_sql []
         let stringRows_space = map convRow space_vals
         let totalnum= length stringRows_space
-        sequence [saveRowSplitPg  rowdata prop_table prop_conn_action time (fromIntegral totalnum ::Float) | rowdata <- stringRows_space ]
+        sequence [saveRowSplitPg  rowdata prop_table prop_conn_action time (fromIntegral totalnum ::Float) mainkey | rowdata <- stringRows_space ]
 
 
         print "done"
@@ -777,7 +786,7 @@ splitDoorplate doorplate=do
 splitDoorplateMainRoad doorplate=do
     --let name ="台品街道纹二大道120号中天大厦一单元24甲室"::String
     --let regex=".+(路|大道|街|街道)"::String
-    let regex="(路|大道|街|街道)"::String
+    let regex="[^村街镇区]+(路|大道|街|街道)"::String
     return ( doorplate =~ regex :: [MatchArray])
 
 --分出村社区

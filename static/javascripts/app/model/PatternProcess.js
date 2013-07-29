@@ -21,12 +21,12 @@ Ext.define('CF.model.PatternProcess', {
             type:'string'
         },
         {
-            name: 'statue',
-            type:'time'
+            name: 'time',
+            type:'String'
         },
 
         {
-            name: 'process',
+            name: 'value',
             type:'string'
         }
     ]
