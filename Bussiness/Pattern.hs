@@ -216,7 +216,16 @@ getOrcl_Orcl prop_conn space_conn prop_table space_table prop_limit space_limit 
 makeFlag rows rowdata=do
                                                           --LF.replaceList [doornum1,doornum2,mainroad,village,secroad,build,cell] "" doorplate
     let build_list=[row | row <- rows, (LF.replaceList ["栋","幢","楼","号楼"] "" (row !! 2))  == (LF.replaceList ["栋","幢","楼","号楼"] "" (rowdata!! 5))]
-    let door_list=[row | row <- rows, (row !! 4)  == (rowdata!! 7) || (if((LF.replaceList ["号"] "" ((LF.splitList "-,－" (row !! 4) )!!0 ::String))  ==((LF.replaceList ["号"] "" ((LF.splitList "-,－" (rowdata!! 7) )!!0))) )then(True)else(False))]
+    let end_num=if((rowdata!! 8)=="")then((rowdata!! 7))else(rowdata!! 8)
+
+    --let end_num_row=if((rowdata!! 5)=="")then((rowdata!! 4))else(rowdata!! 5)
+
+    --let door_list=[row | row <- rows, (row !! 4)  == (rowdata!! 7) ||
+    --            (if((LF.replaceList ["号"] "" ((LF.splitList "-,－" (row !! 4) )!!0 ::String))  ==((LF.replaceList ["号"] "" ((LF.splitList "-,－" (rowdata!! 7) )!!0))) )then(True)else(False))
+    --        ]
+    let door_list=[row | row <- rows, (if((row!! 5)=="")then((row!! 4))else(row!! 5))  == end_num ||
+                    (if((LF.replaceList ["号"] "" ((LF.splitList "-,－" (if((row!! 5)=="")then((row!! 4))else(row!! 5)) )!!0 ::String))  ==((LF.replaceList ["号"] "" ((LF.splitList "-,－" end_num )!!0))) )then(True)else(False))
+               ]
 
     --sequence [(print ((LF.splitList "-,－" (row !! 4))!!0)) | row <- rows]
     --print ((LF.splitList "-,－" (rowdata!! 7) ) !!0)
