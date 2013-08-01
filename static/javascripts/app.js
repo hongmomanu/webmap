@@ -13,6 +13,7 @@ Ext.Loader.setConfig({
     }
 });
 
+
 /**
  * CF.app
  * A MVC application demo that uses GeoExt and Ext components to display
